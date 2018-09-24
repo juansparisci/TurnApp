@@ -1,0 +1,64 @@
+<div class="row animated fadeIn">
+    <div class="col-md-6">
+        <div class="card card-body">
+
+            <h3 class="box-title m-b-0">Obra Social: {{ obraSocial.nombre }}</h3>
+            <p class="text-muted m-b-30 font-13"> Bootstrap Elements </p>
+            <div class="row">
+                <div class="col-sm-12 col-xs-12">
+                    <form #f="ngForm" ngNativeValidate (ngSubmit)="guardarObraSocial(f)">
+
+                        <div class="form-group">
+                            <div class="row">
+                                <label>Nombre </label>
+                                <input [(ngModel)]="obraSocial.nombre" name="obraSocial.nombre" type="text" class="form-control" placeholder="Nombre de Obra Social" required>
+                            </div>
+                            <div class="row m-t-20">
+                                <input [(ngModel)]="obraSocial.activo" name="activo" id="activo" type="checkbox">
+                                <label for="activo">Activo</label>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-success waves-effect waves-light m-r-10"> <i class="fa fa-save"></i> Guardar</button>
+                        <a [routerLink]="'/obras-sociales'" class="btn btn-inverse waves-effect waves-light">Cancelar</a>
+
+
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3" *ngIf="obraSocial._id">
+        <div class="card card-body">
+            <h4 class="box-title m-b-0">Imagen</h4>
+            <img (click)="cambiarFoto()" [src]="obraSocial.img | imagen: 'obraSocial'" class="img-circle img-fluid pointer">
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="card card-body">
+            <h4 class="card-title">Planes ( {{ this.obraSocial.planes?.length }} )</h4>
+            <div class="text-right">
+                <button type="button" (click)="agregarPlan()" class="pointer  btn btn-rounded btn-primary btn-sm m-l-5">
+                            <i class="fa fa-plus"></i> Agregar Plan
+                </button>
+            </div>
+            <table class="table table-hover">
+                <tbody>
+                    <tr *ngFor="let plan of obraSocial.planes; let i = index">
+                        <td>
+                            <input readonly type="text" [(ngModel)]="plan.nombre" name="plan.nombre" class="form-control">
+                        </td>
+                        <td>
+
+                            <button type="button" (click)="borrarPlan(plan._id)" class="btn btn-danger m-1">
+              <i class="fa fa-trash-o"></i>
+            </button>
+                        </td>
+                    </tr>
+                </tbody>
+
+
+            </table>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,50 @@
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <input (keyup)="buscarObraSocial(input.value)" #input type="text" class="form-control" placeholder="Buscar Obra Social...">
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="text-right">
+                    <button [routerLink]="['/obra-social', 'nuevo']" class="pointer  btn btn-rounded btn-primary btn-sm">
+                    <i class="fa fa-plus"></i> Crear Obra Social
+                </button>
+                </div>
+                <h3 class="card-title">Obras Sociales Registradas ( <small> {{ _obraSocialService.totalObrasSociales }} </small> )</h3>
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Obra Social</th>
+                            <th>Activo</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let obraSocial of obrasSociales">
+                            <td><img [src]="obraSocial.img | imagen: 'obraSocial'" class="img-circle w50"></td>
+                            <td>{{ obraSocial.nombre }}</td>
+                            <td>
+                                <i *ngIf="obraSocial.activo" class="fa fa-check-square-o"></i>
+                                <i *ngIf="!obraSocial.activo" class="fa fa-square-o"></i>
+                            </td>
+                            <td>
+                                <button [routerLink]="['/obra-social',obraSocial._id]" class="btn btn-primary m-1">
+                                  <i class="fa fa-edit"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+
+            </div>
+        </div>
+    </div>
+</div>

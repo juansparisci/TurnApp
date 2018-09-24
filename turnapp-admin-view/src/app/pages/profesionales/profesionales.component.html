@@ -1,0 +1,50 @@
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <input (keyup)="buscarProfesional(input.value)" #input type="text" class="form-control" placeholder="Buscar Profesional...">
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="text-right">
+                    <button [routerLink]="['/profesional', 'nuevo']" class="pointer  btn btn-rounded btn-primary btn-sm">
+                      <i class="fa fa-plus"></i> Crear Profesional
+                  </button>
+                </div>
+                <h3 class="card-title">Profesionales Registrados ( <small> {{ _profesionalService.totalProfesionales }} </small> )</h3>
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Profesional</th>
+                            <th>Clínica</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let profesional of profesionales">
+                            <td><img [src]="profesional.img | imagen: 'profesional'" class="img-circle w50"></td>
+                            <td>{{ profesional.nombre }}</td>
+                            <td>{{ profesional.clinica?profesional.clinica['nombre']:'' }}</td>
+                            <td>
+                                <button [routerLink]="['/profesional',profesional._id]" class="btn btn-primary m-1">
+                                    <i class="fa fa-edit"></i>
+                                  </button>
+                                <button (click)="borrarProfesional( profesional )" class="btn btn-danger m-1">
+                                    <i class="fa fa-trash-o"></i>
+                                  </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,62 @@
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <input (keyup)="buscarClinica(input.value)" #input type="text" class="form-control" placeholder="Buscar Clínica...">
+            </div>
+        </div>
+    </div>
+</div>
+<div *ngIf="this.cargando" class="row animated fadeIn">
+    <div class="col-sm-12">
+        <div class="alert alert-warning text-center">
+            <strong>Cargando</strong>
+            <br>
+            <i class="fa fa-refresh fa-spin fa-2x"></i>
+            <br>
+            <span>Espere por favor</span>
+        </div>
+    </div>
+</div>
+<div *ngIf="!this.cargando" class="row animated fadeIn">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="text-right">
+                    <button (click)="crearClinica()" class="pointer  btn btn-rounded btn-primary btn-sm">
+                            <i class="fa fa-plus"></i> Crear Clínica
+                        </button>
+                </div>
+                <h3 class="card-title">Clinicas ( <small>{{ _clinicasService.totalClinicas }}</small> )</h3>
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Foto</th>
+                            <th>Clínica</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let clinica of clinicas">
+                            <td class="w70">
+                                <img (click)="mostrarModal( clinica._id )" [src]="clinica.img | imagen : 'clinica' " class="img-circle w50 pointer">
+                            </td>
+                            <td> <input type="text" [(ngModel)]="clinica.nombre" name="nombre" class="form-control"></td>
+                            <td>
+                                <button (click)="guardarClinica( clinica )" class="btn btn-primary m-1">
+                                  <i class="fa fa-save"></i>
+                                </button>
+                                <button (click)="borrarClinica( clinica )" class="btn btn-danger m-1">
+                                  <i class="fa fa-trash-o"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+
+
+                </table>
+
+            </div>
+        </div>
+    </div>
+</div>
