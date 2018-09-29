@@ -1,5 +1,5 @@
 {
-    // Utilizar IntelliSense para aprender acerca de los posibles atributos.
+    // Use IntelliSense para saber los atributos posibles.
     // Mantenga el puntero para ver las descripciones de los existentes atributos 
     // Para más información, visite: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
@@ -7,8 +7,8 @@
         {
             "type": "chrome",
             "request": "launch",
-            "name": "Admin View",
-            "url": "http://localhost:4200",
+            "name": "Landing View",
+            "url": "http://localhost:4201",
             "webRoot": "${workspaceFolder}"
         }
     ]

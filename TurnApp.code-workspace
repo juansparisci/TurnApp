@@ -1,0 +1,14 @@
+{
+	"folders": [
+		{
+			"path": "turnapp-backend"
+		},
+		{
+			"path": "turnapp-admin-view"
+		},
+		{
+			"path": "turnapp-landing-view"
+		}
+	],
+    "settings": {}
+}
