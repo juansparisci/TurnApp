@@ -33,7 +33,8 @@ import { ObrasSocialesComponent } from './obras-sociales/obras-sociales.componen
 import { ObraSocialComponent } from './obras-sociales/obra-social.component';
 import { PacientesComponent } from './pacientes/pacientes.component';
 import { PacienteComponent } from './pacientes/paciente.component';
-
+import { ClinicaComponent } from './clinicas/clinica.component';
+import { OcupacionesComponent } from './ocupaciones/ocupaciones.component';
 @NgModule({
     declarations: [
         DashboardComponent,
@@ -53,7 +54,9 @@ import { PacienteComponent } from './pacientes/paciente.component';
         ObrasSocialesComponent,
         ObraSocialComponent,
         PacientesComponent,
-        PacienteComponent
+        PacienteComponent,
+        ClinicaComponent,
+        OcupacionesComponent
     ],
     exports: [
         DashboardComponent,

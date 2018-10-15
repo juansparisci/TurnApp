@@ -4,6 +4,6 @@ var profesionalSchema = new Schema({
     nombre: { type: String, required: [true, 'El nombre es necesario'] },
     img: { type: String, required: false },
     usuario: { type: Schema.Types.ObjectId, ref: 'Usuario', required: false },
-    clinica: { type: Schema.Types.ObjectId, ref: 'Clinica', required: [true, 'El id de Clinica es un campo obligatorio'] }
+    clinica: { type: Schema.Types.ObjectId, ref: 'Clinica', required: [true, 'La clínica es un campo obligatorio'] }
 }, { collection: 'profesionales' });
 module.exports = mongoose.model('Profesional', profesionalSchema);

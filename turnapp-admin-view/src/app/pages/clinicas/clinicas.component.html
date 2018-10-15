@@ -18,12 +18,12 @@
         </div>
     </div>
 </div>
-<div *ngIf="!this.cargando" class="row animated fadeIn">
+<div *ngIf="!this.cargando" class="row">
     <div class="col-12">
         <div class="card">
             <div class="card-body">
                 <div class="text-right">
-                    <button (click)="crearClinica()" class="pointer  btn btn-rounded btn-primary btn-sm">
+                    <button [routerLink]="['/clinica','nueva']" routerLinkActive="router-link-active" class="pointer  btn btn-rounded btn-primary btn-sm">
                             <i class="fa fa-plus"></i> Crear Clínica
                         </button>
                 </div>
@@ -43,11 +43,8 @@
                             </td>
                             <td> <input type="text" [(ngModel)]="clinica.nombre" name="nombre" class="form-control"></td>
                             <td>
-                                <button (click)="guardarClinica( clinica )" class="btn btn-primary m-1">
-                                  <i class="fa fa-save"></i>
-                                </button>
-                                <button (click)="borrarClinica( clinica )" class="btn btn-danger m-1">
-                                  <i class="fa fa-trash-o"></i>
+                                <button [routerLink]="['/clinica',clinica._id]" routerLinkActive="router-link-active" class="btn btn-primary m-1">
+                                  <i class="fa fa-edit"></i>
                                 </button>
                             </td>
                         </tr>

@@ -211,6 +211,7 @@ function obtenerMenu(ROLE) {
         menu[1].submenu.unshift({ titulo: 'Usuarios', url: '/usuarios' });
         menu[1].submenu.unshift({ titulo: 'Obras Sociales', url: '/obras-sociales' });
         menu[1].submenu.unshift({ titulo: 'Pacientes', url: '/pacientes' });
+        menu[1].submenu.unshift({ titulo: 'Ocupaciones', url: '/ocupaciones' });
     }
     return menu;
 }

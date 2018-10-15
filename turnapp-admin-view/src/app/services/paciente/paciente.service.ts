@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { URL_SERVICIOS } from '../../config/config';
-import { map } from 'rxjs/operators';
+import { map, catchError } from 'rxjs/operators';
 import { UsuarioService } from '../usuario/usuario.service';
 import { Paciente } from '../../models/paciente.model';
+import { throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -52,6 +53,10 @@ export class PacienteService {
           map((resp: any) => {
             swal('Paciente actualizado', paciente.nombre, 'success');
             return resp.paciente;
+          }),
+          catchError( (err) => {
+            swal('Error al actualizar paciente: ', err.error.mensaje, 'error' );
+            return throwError(err);
           })
         );
     } else {

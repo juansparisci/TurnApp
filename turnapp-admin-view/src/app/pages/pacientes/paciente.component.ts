@@ -4,6 +4,9 @@ import { Paciente } from '../../models/paciente.model';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ModalUploadService } from '../../components/modal-upload/modal-upload.service';
 import { PacienteService } from '../../services/paciente/paciente.service';
+import { OcupacionService } from '../../services/service.index';
+import { Ocupacion } from '../../models/ocupacion.model';
+import { formatDate } from '@angular/common';
 
 
 @Component({
@@ -12,9 +15,11 @@ import { PacienteService } from '../../services/paciente/paciente.service';
   styles: []
 })
 export class PacienteComponent implements OnInit {
-  paciente: Paciente = new Paciente('', '', '', '', { tipo: '', numero: null });
+  paciente: Paciente = new Paciente('', '', '', { tipo: '', numero: null }, { telefono: '', email: ''});
+  ocupaciones: Ocupacion[] = [];
  constructor(
               private _pacienteService: PacienteService,
+              private _ocupacionService: OcupacionService,
               private router: Router,
               private activatedRoute: ActivatedRoute,
               private _modalUploadService: ModalUploadService
@@ -25,6 +30,7 @@ export class PacienteComponent implements OnInit {
                    this.cargarPaciente(id);
                  }
                });
+               _ocupacionService.cargarOcupaciones().subscribe(ocupaciones => this.ocupaciones = ocupaciones );
              }
 
  ngOnInit() {
@@ -48,6 +54,9 @@ export class PacienteComponent implements OnInit {
    this._pacienteService.cargarPaciente( id )
      .subscribe( (paciente: any) => {
          this.paciente = paciente;
+         if (!paciente.datosContacto) {
+          paciente.datosContacto = { telefono: '', email: ''};
+         }
        } );
  }
  cambiarFoto() {

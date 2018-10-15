@@ -144,7 +144,9 @@
          }
          clinica.nombre = body.nombre;
          clinica.img = body.img;
-         clinica.telefonoPrincipal = body.telefonoPrincipal;
+         if (body.datosContacto) {
+             clinica.datosContacto = body.datosContacto;
+         }
          clinica.save((er, clinicaGuardada) => {
              if (er) {
                  return res.status(400).json({

@@ -12,18 +12,43 @@
                         </div>
                         <div class="form-group">
                             <label>Documento </label>
-                            <select [(ngModel)]="paciente.documento.tipo" name="tipo" class="form-control" required>
-                                <option value="DNI">DNI</option>
-                                <option value="CI">CI</option>LC
-                                <option value="LE">LE</option>
-                                <option value="LC">LC</option>
-                                
-                              </select>
-                            <input [(ngModel)]="paciente.documento.numero" name="numero" type="text" class="form-control" placeholder="Número de documento" required>
+
+                            <div class="input-group mb-3">
+                                <select [(ngModel)]="paciente.documento.tipo" name="tipo" class="custom-select col-3" required>
+                                            <option value="DNI">DNI</option>
+                                            <option value="CI">CI</option>LC
+                                            <option value="LE">LE</option>
+                                            <option value="LC">LC</option>
+                                            
+                                          </select>
+                                <input [(ngModel)]="paciente.documento.numero" name="numero" type="text" class="form-control" placeholder="Número de documento" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Género </label>
+                            <select [(ngModel)]="paciente.genero" name="genero" class="custom-select" required>
+                                                <option value="Masculino">Masculino</option>
+                                                <option value="Femenino">Femenino</option>                                             
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Fecha de Nacimiento </label>
+                            <input [ngModel]="paciente.fechaNacimiento | date: 'yyyy-MM-dd' : '+0430'" (ngModelChange)="paciente.fechaNacimiento=$event" name="fechaNacimiento" type="date" class="form-control" required>
+
+                        </div>
+                        <div class="form-group">
+                            <label>Ocupación </label>
+                            <select [(ngModel)]="paciente.ocupacion" name="ocupacion" class="custom-select" required>
+                                                    <option *ngFor="let ocupacion of this.ocupaciones" [value]="ocupacion._id">{{ ocupacion.nombre }}</option>                                        
+                                </select>
                         </div>
                         <div class="form-group">
                             <label>Teléfono </label>
-                            <input [(ngModel)]="paciente.telefono" name="telefono" type="text" class="form-control" placeholder="Teléfono de Paciente" required>
+                            <input [(ngModel)]="paciente.datosContacto.telefono" name="telefono" type="text" class="form-control" placeholder="Teléfono de Paciente" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Email </label>
+                            <input [(ngModel)]="paciente.datosContacto.email" name="email" type="email" class="form-control" placeholder="Email de Paciente" required>
                         </div>
                         <button type="submit" class="btn btn-success waves-effect waves-light m-r-10"> <i class="fa fa-save"></i> Guardar</button>
                         <a [routerLink]="'/pacientes'" class="btn btn-inverse waves-effect waves-light">Cancelar</a>

@@ -2,6 +2,11 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 
+// Locale
+import { registerLocaleData } from '@angular/common';
+import locale_esAR from '@angular/common/locales/es-AR';
+registerLocaleData(locale_esAR);
+
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './login/register.component';

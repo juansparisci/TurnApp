@@ -10,6 +10,7 @@ import { LoginGuardGuard, AdminGuard, VerificaTokenGuard } from '../services/ser
 import { ProfileComponent } from './profile/profile.component';
 import { UsuariosComponent } from './usuarios/usuarios.component';
 import { ClinicasComponent } from './clinicas/clinicas.component';
+import { ClinicaComponent } from './clinicas/clinica.component';
 import { ProfesionalesComponent } from './profesionales/profesionales.component';
 import { ProfesionalComponent } from './profesionales/profesional.component';
 import { BusquedaComponent } from './busqueda/busqueda.component';
@@ -18,6 +19,7 @@ import { ProfGuard } from '../services/guards/prof.guard';
 import { ObraSocialComponent } from './obras-sociales/obra-social.component';
 import { PacientesComponent } from './pacientes/pacientes.component';
 import { PacienteComponent } from './pacientes/paciente.component';
+import { OcupacionesComponent } from './ocupaciones/ocupaciones.component';
 
 const pagesRoutes: Routes = [
     //#region pruebas
@@ -49,6 +51,8 @@ const pagesRoutes: Routes = [
     { path: 'pacientes', component: PacientesComponent, data: {titulo: 'Mantenimiento de Pacientes'} },
     { path: 'profesional/:id', component: ProfesionalComponent, data: {titulo: 'Actualizar Profesional'} },
     { path: 'paciente/:id', component: PacienteComponent, data: {titulo: 'Actualizar Paciente'} },
+    { path: 'ocupaciones', component: OcupacionesComponent, data: {titulo: 'Actualizar Ocupación'} },
+    { path: 'clinica/:id', component: ClinicaComponent, data: {titulo: 'Actualizar Clinica'} },
     { path: '', redirectTo: '/dashboard', pathMatch: 'full' }
 ];
 export const PAGES_ROUTES = RouterModule.forChild(pagesRoutes);

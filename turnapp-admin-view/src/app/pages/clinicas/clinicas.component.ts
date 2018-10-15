@@ -36,25 +36,7 @@ export class ClinicasComponent implements OnInit {
       );
 
   }
-  crearClinica () {
-    swal({
-      content: {
-        element: 'input',
-        attributes: {
-          placeholder: 'Ingrese el nombre de la clínica',
-          type: 'text',
-        },
-      },
-    }).then( nombre => {
-      if (nombre) {
-        this._clinicasService.crearClinica(new Clinica(nombre))
-        .subscribe( (resp: any ) => {
-          console.log(resp);
-        });
-      }
-    }
-  );
-  }
+
   cargarClinicas() {
     this.cargando = true;
     this._clinicasService.cargarClinicas()

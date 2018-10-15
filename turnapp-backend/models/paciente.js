@@ -7,7 +7,18 @@ var pacienteSchema = new Schema({
         numero: { type: Number, required: true }
     },
     img: { type: String, required: false },
-    telefono: { type: String, required: [true, 'El telefono es necesario'] },
+    obraSocial: { type: Schema.Types.ObjectId, ref: 'ObraSocial', required: false },
     usuario: { type: Schema.Types.ObjectId, ref: 'Usuario', required: false },
+    datosContacto: {
+        telefono: { type: String, required: [true, 'El telefono es necesario'] },
+        email: { type: String, required: false, validator: function(v) { return /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/; } }
+    },
+    fechaNacimiento: {
+        type: Date,
+        max: Date.now,
+        required: [true, 'La fecha de nacimiento es necesaria.']
+    },
+    genero: { type: String, enum: ['Masculino', 'Femenino'], required: [true, 'El género es necesario.'] },
+    ocupacion: { type: Schema.Types.ObjectId, ref: 'Ocupacion', required: [true, 'La ocupación es necesaria.'] }
 }, { collection: 'pacientes' });
 module.exports = mongoose.model('Paciente', pacienteSchema);

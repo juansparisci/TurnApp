@@ -142,14 +142,20 @@ app.put('/:id', mdAutenticacion.verificaToken, (req, res) => {
         }
         paciente.nombre = body.nombre;
         paciente.documento = body.documento;
-        paciente.telefono = body.telefono;
+        paciente.datosContacto = body.datosContacto;
         paciente.img = body.img;
-
+        paciente.fechaNacimiento = body.fechaNacimiento;
+        paciente.genero = body.genero;
+        paciente.ocupacion = body.ocupacion;
         paciente.save((er, pacienteGuardado) => {
             if (er) {
+                var mensaje = 'Error al actualizar paciente';
+                if (er.errors.fechaNacimiento) {
+                    mensaje = "Por favor verifique la fecha de nacimiento.";
+                }
                 return res.status(400).json({
                     ok: false,
-                    mensaje: 'Error al actualizar paciente',
+                    mensaje: mensaje,
                     errors: er
                 });
             }

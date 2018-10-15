@@ -3,7 +3,18 @@ var Schema = mongoose.Schema;
 var clinicaSchema = new Schema({
     nombre: { type: String, required: [true, 'El nombre es necesario'] },
     img: { type: String, required: false },
-    telefonoPrincipal: { type: String, required: false },
+    datosContacto: {
+        required: false,
+        type: {
+            telefonos: {
+                required: false,
+                type: {
+                    principal: { type: String, required: false }
+                }
+            },
+            email: { type: String, required: false, validator: function(v) { return /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/; } }
+        }
+    },
     usuario: { type: Schema.Types.ObjectId, ref: 'Usuario' }
 }, { collection: 'clinicas' });
 
