@@ -44,6 +44,7 @@ app.post('/', mdAutenticacion.verificaToken, (req, res) => {
     var body = req.body;
     var profesional = new Profesional({
         nombre: body.nombre,
+        apellido: body.apellido,
         img: body.img,
         usuario: req.usuario._id,
         clinica: body.clinica
@@ -142,6 +143,7 @@ app.put('/:id', mdAutenticacion.verificaToken, (req, res) => {
             });
         }
         profesional.nombre = body.nombre;
+        profesional.apellido = body.apellido;
         profesional.clinica = body.clinica;
         profesional.img = body.img;
 

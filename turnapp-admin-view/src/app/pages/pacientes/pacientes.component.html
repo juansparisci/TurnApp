@@ -29,8 +29,8 @@
                     <tbody>
                         <tr *ngFor="let paciente of pacientes">
                             <td><img [src]="paciente.img | imagen: 'paciente'" class="img-circle w50"></td>
-                            <td>{{ paciente.nombre }}</td>
-                            <td>{{ paciente.telefono?paciente.telefono:'' }}</td>
+                            <td>{{ paciente.nombre +' '+ paciente.apellido }}</td>
+                            <td>{{ paciente.datosContacto.telefono?paciente.datosContacto.telefono:'' }}</td>
                             <td>
                                 <button [routerLink]="['/paciente',paciente._id]" class="btn btn-primary m-1">
                                   <i class="fa fa-edit"></i>

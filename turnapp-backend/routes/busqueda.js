@@ -5,6 +5,7 @@ var Profesional = require('../models/profesional');
 var Usuario = require('../models/usuario');
 var ObraSocial = require('../models/obra-social');
 var Paciente = require('../models/paciente');
+var Ocupacion = require('../models/ocupacion');
 
 /**
  * Busqueda especifica
@@ -30,7 +31,10 @@ app.get('/coleccion/:coleccion/:termino', (req, res) => {
             prom = buscarObrasSociales(regex);
             break;
         case 'pacientes':
-            prom = buscarPacientes(regex);
+            prom = buscarPacientes(regex, termino);
+            break;
+        case 'ocupaciones':
+            prom = buscarOcupaciones(regex, termino);
             break;
         default:
             return res.status(400).json({
@@ -88,7 +92,13 @@ function buscarClinicas(regex) {
 function buscarProfesionales(regex) {
     return new Promise((resolve, reject) => {
         Profesional
-            .find({ nombre: regex })
+            .find()
+            .or(
+                [
+                    { nombre: regex },
+                    { apellido: regex }
+                ]
+            )
             .populate('usuario', 'nombre email')
             .populate('clinica')
             .exec((err, profesionales) => {
@@ -114,18 +124,32 @@ function buscarObrasSociales(regex) {
     });
 }
 
-function buscarPacientes(regex) {
+function buscarPacientes(regex, termino) {
     return new Promise((resolve, reject) => {
-        Paciente.find({})
+        Paciente.find()
             .or([
                 { 'nombre': regex },
+                { 'apellido': regex },
                 { 'documento.numero': regex }
             ])
             .exec((err, pacientes) => {
                 if (err) {
-                    reject('Error al cargar obras sociales', err);
+                    reject('Error al buscar pacientes', err);
                 } else {
                     resolve(pacientes);
+                }
+            });
+    });
+}
+
+function buscarOcupaciones(regex, termino) {
+    return new Promise((resolve, reject) => {
+        Ocupacion.find({ 'nombre': regex })
+            .exec((err, ocupaciones) => {
+                if (err) {
+                    reject('Error al buscar ocupaciones', err);
+                } else {
+                    resolve(ocupaciones);
                 }
             });
     });

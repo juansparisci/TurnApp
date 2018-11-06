@@ -1,26 +1,42 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit, PipeTransform } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import { UsuarioService } from '../services/service.index';
 import { Usuario } from '../models/usuario.model';
 
 import { NgZone } from '@angular/core'; // Se usa para resolver bug con el template adminpro
+import { Clinica } from '../models/clinica.model';
+import { ClinicaService } from '../services/clinica/clinica.service';
+import { ImagenPipe } from '../pipes/imagen.pipe';
+
 
 declare function init_plugins();
 declare const gapi: any;
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.css'],
+  providers: [ImagenPipe]
 })
 export class LoginComponent implements OnInit {
   recuerdame: boolean= false;
   email: string;
-
+  clinica: Clinica;
   auth2: any;
   constructor(public router: Router,
               public _usuarioService: UsuarioService,
-              private zone: NgZone) { }
+              public _clinicaServie: ClinicaService,
+              private zone: NgZone,
+              private activatedRoute: ActivatedRoute,
+              public imagen: ImagenPipe) {
+                activatedRoute.params.subscribe( params => {
+                  const urlClinica = params['urlClinica'];
+                  _clinicaServie.obtenerClinicaPorUrl(urlClinica).subscribe((cli: any) => {
+                       this.clinica = cli.clinica;
+                      }
+                     );
+                });
+               }
 
   ngOnInit() {
     init_plugins();
@@ -48,7 +64,7 @@ export class LoginComponent implements OnInit {
     // se ejecuta dentro de una zona para controlar error con template admin pro
     this.zone.run( () => {
       this._usuarioService.loginGoogle( token )
-      .subscribe( () => window.location.href = '/#dashboard' // this.router.navigate(['/dashboard'])
+      .subscribe( () => window.location.href = '/dashboard' // this.router.navigate(['/dashboard'])
       );
     });
 

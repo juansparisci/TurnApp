@@ -61,4 +61,31 @@ export class ClinicaComponent implements OnInit {
   cambiarFoto() {
     this._modalUploadService.mostrarModal('clinicas', this.clinica._id);
   }
+  eliminarClinica( id: string) {
+
+    if (!id) {
+      return;
+    }
+    swal( {
+      title: '¿Estás seguro?',
+      text: 'Una vez eliminada la clínica, la misma no podrá recuperarse.',
+      icon: 'warning',
+      buttons: ['Cancel', 'Ok'],
+      dangerMode: true,
+    })
+    .then((willDelete) => {
+      if (willDelete) {
+        this._clinicaService.borrarClinica( id )
+      .subscribe( ( resp: any ) => {
+        if ( resp ) {
+          swal('La clíca se ha eliminado con éxito', {
+            icon: 'success',
+          }).then(
+            () => this.router.navigate(['clinicas'])
+          );
+        }
+      });
+      }
+    });
+  }
 }

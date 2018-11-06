@@ -45,20 +45,6 @@ export class ClinicasComponent implements OnInit {
         this.cargando = false;
       });
   }
-  guardarClinica( clinica: Clinica) {
-    this._clinicasService.actualizarClinica( clinica ).subscribe();
-  }
-  borrarClinica( clinica: Clinica) {
-    if (!clinica) {
-      return;
-    }
-    this._clinicasService.borrarClinica( clinica._id )
-      .subscribe( ( resp: any ) => {
-        if ( resp ) {
-          this.cargarClinicas();
-        }
-      });
-  }
   mostrarModal( id: string) {
     this._modalUploadService.mostrarModal( 'clinicas', id);
   }

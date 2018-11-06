@@ -43,10 +43,14 @@ app.post('/', mdAutenticacion.verificaToken, (req, res) => {
     var body = req.body;
     var paciente = new Paciente({
         nombre: body.nombre,
+        apellido: body.apellido,
+        genero: body.genero,
+        ocupacion: body.ocupacion,
+        fechaNacimiento: body.fechaNacimiento,
         img: body.img,
         usuario: req.usuario._id,
         documento: body.documento,
-        telefono: body.telefono
+        datosContacto: body.datosContacto
     });
     paciente.save((err, pacienteGuardado) => {
         if (err) {
@@ -141,6 +145,7 @@ app.put('/:id', mdAutenticacion.verificaToken, (req, res) => {
             });
         }
         paciente.nombre = body.nombre;
+        paciente.apellido = body.apellido;
         paciente.documento = body.documento;
         paciente.datosContacto = body.datosContacto;
         paciente.img = body.img;

@@ -146,10 +146,6 @@ app.put('/:id', mdAutenticacion.verificaToken, (req, res) => {
             });
         }
         ocupacion.nombre = body.nombre;
-        ocupacion.img = body.img;
-        if (body.datosContacto) {
-            ocupacion.datosContacto = body.datosContacto;
-        }
         ocupacion.save((er, ocupacionGuardada) => {
             if (er) {
                 return res.status(400).json({

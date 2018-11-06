@@ -34,6 +34,10 @@ export class ClinicaService {
     const url = URL_SERVICIOS + '/clinica/' + id;
     return this.http.get(url);
   }
+  obtenerClinicaPorUrl( pUrl: string ) {
+    const url = URL_SERVICIOS + '/clinica/url/' + pUrl;
+    return this.http.get(url);
+  }
   guardarClinica( clinica: Clinica ) {
     let url = URL_SERVICIOS + '/clinica/';
     url += '?token=' + this._usuarioService.token;

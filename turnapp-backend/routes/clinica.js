@@ -67,7 +67,34 @@
              });
          });
  });
-
+ // ==========================================
+ // Obtener Clinica por Url
+ // ==========================================
+ app.get('/url/:url', (req, res) => {
+     var url = req.params.url;
+     Clinica.findOne({ 'urlId': url })
+         .populate('usuario', 'nombre img email')
+         .exec((err, clinica) => {
+             if (err) {
+                 return res.status(500).json({
+                     ok: false,
+                     mensaje: 'Error al buscar clinica',
+                     errors: err
+                 });
+             }
+             if (!clinica) {
+                 return res.status(400).json({
+                     ok: false,
+                     mensaje: 'La clinica con la url ' + url + 'no existe',
+                     errors: { message: 'No existe una clinica con esa URL' }
+                 });
+             }
+             res.status(200).json({
+                 ok: true,
+                 clinica: clinica
+             });
+         });
+ });
  /**
   * Crear clinica
   */
@@ -76,7 +103,8 @@
      var clinica = new Clinica({
          nombre: body.nombre,
          img: body.img,
-         usuario: req.usuario._id
+         usuario: req.usuario._id,
+         idUrl: body.idUrl
      });
      clinica.save((err, clinicaGuardada) => {
          if (err) {
@@ -144,6 +172,7 @@
          }
          clinica.nombre = body.nombre;
          clinica.img = body.img;
+         clinica.urlId = body.urlId;
          if (body.datosContacto) {
              clinica.datosContacto = body.datosContacto;
          }

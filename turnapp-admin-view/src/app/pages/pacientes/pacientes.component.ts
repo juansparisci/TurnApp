@@ -21,7 +21,7 @@ export class PacientesComponent implements OnInit {
       }
     );
   }
-  buscarProfesional( termino: string ) {
+  buscarPaciente( termino: string ) {
     if ( termino.length <= 0 ) {
       this.cargarPacientes();
       return;
@@ -33,7 +33,7 @@ export class PacientesComponent implements OnInit {
         }
       );
   }
-  borrarProfesional( paciente: Paciente ) {
+  borrarPaciente( paciente: Paciente ) {
     this._pacienteService.borrarPaciente(paciente._id)
       .subscribe(() => this.cargarPacientes());
   }

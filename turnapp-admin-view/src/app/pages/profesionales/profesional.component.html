@@ -11,6 +11,10 @@
                             <input [(ngModel)]="profesional.nombre" name="nombre" type="text" class="form-control" placeholder="Nombre de Profesional" required>
                         </div>
                         <div class="form-group">
+                            <label>Apellido </label>
+                            <input [(ngModel)]="profesional.apellido" name="apellido" type="text" class="form-control" placeholder="Apellido de Profesional" required>
+                        </div>
+                        <div class="form-group">
                             <label>Clínica</label>
                             <select (change)="cambioClinica( $event.target.value )" [(ngModel)]="profesional.clinica" name="clinica" class="form-control" required>
                               <option value="">Seleccione clínica</option>

@@ -7,7 +7,7 @@ import { PagesComponent } from './pages/pages.component';
 import { LoginGuardGuard } from './services/service.index';
 
 const appRoutes: Routes = [
-        { path: 'login', component: LoginComponent },
+        { path: ':urlClinica/login', component: LoginComponent },
         { path: 'register', component: RegisterComponent },
         {
                 path: '',
@@ -18,4 +18,4 @@ const appRoutes: Routes = [
         { path: '**', component: NopagefoundComponent }
 ];
 
-export const APP_ROUTES = RouterModule.forRoot( appRoutes, { useHash: true } );
+export const APP_ROUTES = RouterModule.forRoot( appRoutes, { useHash: false } );

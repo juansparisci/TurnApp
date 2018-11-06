@@ -15,7 +15,7 @@ import { formatDate } from '@angular/common';
   styles: []
 })
 export class PacienteComponent implements OnInit {
-  paciente: Paciente = new Paciente('', '', '', { tipo: '', numero: null }, { telefono: '', email: ''});
+  paciente: Paciente = new Paciente('', '', '', '', { tipo: '', numero: null }, { telefono: '', email: ''});
   ocupaciones: Ocupacion[] = [];
  constructor(
               private _pacienteService: PacienteService,

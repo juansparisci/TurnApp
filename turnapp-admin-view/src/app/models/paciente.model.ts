@@ -1,6 +1,7 @@
 export class Paciente {
     constructor(
         public nombre?: string,
+        public apellido?: string,
         public img?: string,
         public usuario?: string,
         public documento?: { tipo: string, numero?: number  },

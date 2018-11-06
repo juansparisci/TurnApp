@@ -9,14 +9,17 @@
                         <div class="form-group">
                             <label>Nombre </label>
                             <input [(ngModel)]="clinica.nombre" name="nombre" type="text" class="form-control" placeholder="Nombre de Clinica" required>
+                            <label>URL </label> <span class="font-10"><i> Sin espacios ni acentos (Ejemplo: <b>iDentaGrupoOdontologico</b> )</i></span>
+                            <input [(ngModel)]="clinica.urlId" pattern="^[A-Za-z0-9_.]+$" name="idUrl" type="text" class="form-control" placeholder="URL de acceso a la clínica" required>
                             <label>Email </label>
                             <input [(ngModel)]="datosContacto.email" name="email" type="email" class="form-control" placeholder="Ingrese el email de la Clínica">
                             <label>Teléfono Principal </label>
-                            <input [(ngModel)]="datosContacto.telefonos.principal" name="principal" type="tel" class="form-control" placeholder="Ingrese el telégono principal de la clinica">
+                            <input [(ngModel)]="datosContacto.telefonos.principal" name="principal" type="tel" class="form-control" placeholder="Ingrese el teléfono principal de la clinica">
 
                         </div>
                         <button type="submit" class="btn btn-success waves-effect waves-light m-r-10"> <i class="fa fa-save"></i> Guardar</button>
-                        <a [routerLink]="'/clinicas'" class="btn btn-inverse waves-effect waves-light">Cancelar</a>
+                        <a [routerLink]="'/clinicas'" class="btn btn-inverse waves-effect waves-light m-r-10">Cancelar</a>
+                        <button type="button" (click)="eliminarClinica(clinica._id)" class="btn btn-danger waves-effect waves-light m-r-10"> <i class="fa fa-save"></i> Eliminar Clínica</button>
                     </form>
                 </div>
             </div>

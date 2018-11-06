@@ -29,7 +29,7 @@
                     <tbody>
                         <tr *ngFor="let profesional of profesionales">
                             <td><img [src]="profesional.img | imagen: 'profesional'" class="img-circle w50"></td>
-                            <td>{{ profesional.nombre }}</td>
+                            <td>{{ profesional.nombre +' '+ profesional.apellido }}</td>
                             <td>{{ profesional.clinica?profesional.clinica['nombre']:'' }}</td>
                             <td>
                                 <button [routerLink]="['/profesional',profesional._id]" class="btn btn-primary m-1">

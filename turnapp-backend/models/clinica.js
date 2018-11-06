@@ -2,6 +2,7 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var clinicaSchema = new Schema({
     nombre: { type: String, required: [true, 'El nombre es necesario'] },
+    urlId: { type: String, unique: true, required: [true, 'El id de url es necesario'] },
     img: { type: String, required: false },
     datosContacto: {
         required: false,

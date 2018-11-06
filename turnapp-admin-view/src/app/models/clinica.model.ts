@@ -6,6 +6,7 @@ export class Clinica {
         public nombre: string,
         public img?: string,
         public _id?: string,
+        public urlId?: string,
         public datosContacto?: DatosContacto
     ) { }
 
