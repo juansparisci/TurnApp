@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { SubirArchivoService } from '../subirArchivo/subir-archivo.service';
 import { throwError } from 'rxjs';
 import swal from 'sweetalert';
+import { Clinica } from '../../models/clinica.model';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +15,7 @@ import swal from 'sweetalert';
 export class UsuarioService {
   usuario: Usuario;
   token: string;
+  clinica: Clinica;
   menu: any[] = [];
   constructor(
     public http: HttpClient,
@@ -47,17 +49,20 @@ export class UsuarioService {
     if ( localStorage.getItem('token') ) {
       this.token = localStorage.getItem('token');
       this.usuario = JSON.parse(localStorage.getItem('usuario'));
+      this.clinica = JSON.parse(localStorage.getItem('clinica'));
       this.menu = JSON.parse(localStorage.getItem('menu'));
     }else {
       this.token = '';
       this.usuario = null;
+      this.clinica = null;
       this.menu = null;
     }
   }
-  guardarStorage(id: string, token: string, usuario: Usuario, menu: any) {
+  guardarStorage(id: string, token: string, usuario: Usuario, menu: any, clinica: Clinica) {
     localStorage.setItem('id', id );
     localStorage.setItem('token', token );
     localStorage.setItem('usuario', JSON.stringify(usuario) );
+    localStorage.setItem('clinica', JSON.stringify(clinica) );
     localStorage.setItem('menu', JSON.stringify(menu) );
     this.usuario = usuario;
     this.token = token;
@@ -66,16 +71,16 @@ export class UsuarioService {
   //#endregion
 
   //#region logins/logout
-  loginGoogle(token: string) {
+  loginGoogle(token: string, clinica: Clinica) {
     const url = URL_SERVICIOS + '/login/google';
     return this.http.post( url, { token }).pipe(
       map( (resp: any) => {
-        this.guardarStorage(resp.id, resp.token, resp.usuario, resp.menu);
+        this.guardarStorage(resp.id, resp.token, resp.usuario, resp.menu, clinica);
         return true;
       })
     );
   }
-  login(usuario: Usuario, recordar: boolean = false) {
+  login(usuario: Usuario, recordar: boolean = false, clinica: Clinica) {
     if (recordar) {
       localStorage.setItem('email', usuario.email );
     }else {
@@ -85,7 +90,7 @@ export class UsuarioService {
     return this.http.post( url, usuario)
     .pipe(
       map((resp: any) => {
-        this.guardarStorage(resp.id, resp.token, resp.usuario, resp.menu);
+        this.guardarStorage(resp.id, resp.token, resp.usuario, resp.menu, clinica);
         return true;
       }),
       catchError( err => {
@@ -101,7 +106,8 @@ export class UsuarioService {
     localStorage.removeItem('token');
     localStorage.removeItem('usuario');
     localStorage.removeItem('menu');
-    this.router.navigate(['/login']);
+    localStorage.removeItem('clinica');
+    this.router.navigate([this.clinica.urlId, 'login']);
   }
   //#endregion
 
@@ -124,7 +130,7 @@ export class UsuarioService {
     return this.http.put( url, usuario).pipe(
       map( (resp: any) => {
         if (usuario._id === this.usuario._id) {
-          this.guardarStorage(resp.usuario._id, this.token, resp.usuario, resp.menu);
+          this.guardarStorage(resp.usuario._id, this.token, resp.usuario, resp.menu, this.clinica);
         }
         swal('Usuario actualizado', usuario.nombre, 'success');
         return true;
@@ -140,7 +146,7 @@ export class UsuarioService {
     .then( (resp: any) => {
       this.usuario.img = resp.usuario.img;
       swal( 'Imagen Actualizada', this.usuario.nombre, 'success');
-      this.guardarStorage(idUsuario, this.token, this.usuario, this.menu);
+      this.guardarStorage(idUsuario, this.token, this.usuario, this.menu, this.clinica);
     })
     .catch( resp => {
       console.log(resp);

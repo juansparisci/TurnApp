@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 
 
-import { PagesComponent } from './pages.component';
+// import { PagesComponent } from './pages.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ProgressComponent } from './progress/progress.component';
 import { Graficas1Component } from './graficas1/graficas1.component';
@@ -24,7 +24,7 @@ import { RxjsComponent } from './rxjs/rxjs.component';
 import { ProfileComponent } from './profile/profile.component';
 import { CommonModule } from '@angular/common';
 import { UsuariosComponent } from './usuarios/usuarios.component';
-import { ModalUploadComponent } from '../components/modal-upload/modal-upload.component';
+// import { ModalUploadComponent } from '../components/modal-upload/modal-upload.component';
 import { ClinicasComponent } from './clinicas/clinicas.component';
 import { ProfesionalesComponent } from './profesionales/profesionales.component';
 import { ProfesionalComponent } from './profesionales/profesional.component';
@@ -35,6 +35,9 @@ import { PacientesComponent } from './pacientes/pacientes.component';
 import { PacienteComponent } from './pacientes/paciente.component';
 import { ClinicaComponent } from './clinicas/clinica.component';
 import { OcupacionesComponent } from './ocupaciones/ocupaciones.component';
+import { ProfesionesComponent } from './profesiones/profesiones.component';
+import { ProfesionComponent } from './profesiones/profesion.component';
+import { EspecialidadComponent } from './profesiones/especialidad/especialidad.component';
 @NgModule({
     declarations: [
         DashboardComponent,
@@ -56,7 +59,10 @@ import { OcupacionesComponent } from './ocupaciones/ocupaciones.component';
         PacientesComponent,
         PacienteComponent,
         ClinicaComponent,
-        OcupacionesComponent
+        OcupacionesComponent,
+        ProfesionesComponent,
+        ProfesionComponent,
+        EspecialidadComponent
     ],
     exports: [
         DashboardComponent,

@@ -14,7 +14,8 @@ import {
         AdminGuard,
         SubirArchivoService,
         VerificaTokenGuard,
-        ObraSocialService
+        ObraSocialService,
+        ProfesionService
       } from './service.index';
 import { ModalUploadService } from '../components/modal-upload/modal-upload.service';
 
@@ -30,6 +31,7 @@ import { ModalUploadService } from '../components/modal-upload/modal-upload.serv
     UsuarioService,
     ClinicaService,
     ProfesionalService,
+    ProfesionService,
     PacienteService,
     LoginGuardGuard,
     AdminGuard,

@@ -11,6 +11,7 @@ app.get('/', (req, res, next) => {
     Profesional.find({})
         .populate('usuario', 'nombre email')
         .populate('clinica')
+        .populate('profesion')
         .exec(
             (err, profesionales) => {
                 if (err) {
@@ -47,7 +48,10 @@ app.post('/', mdAutenticacion.verificaToken, (req, res) => {
         apellido: body.apellido,
         img: body.img,
         usuario: req.usuario._id,
-        clinica: body.clinica
+        clinica: body.clinica,
+        profesion: body.profesion,
+        especialidades: body.especialidades
+
     });
     profesional.save((err, profesionalGuardado) => {
         if (err) {
@@ -100,6 +104,7 @@ app.get('/:id', (req, res) => {
     Profesional.findById(id)
         .populate('usuario', 'nombre email img')
         .populate('clinica')
+        .populate('profesion')
         .exec((err, profesional) => {
             if (err) {
                 return res.status(500).json({
@@ -145,6 +150,8 @@ app.put('/:id', mdAutenticacion.verificaToken, (req, res) => {
         profesional.nombre = body.nombre;
         profesional.apellido = body.apellido;
         profesional.clinica = body.clinica;
+        profesional.profesion = body.profesion;
+        profesional.especialidades = body.especialidades;
         profesional.img = body.img;
 
         profesional.save((er, profesionalGuardado) => {

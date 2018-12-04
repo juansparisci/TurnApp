@@ -63,7 +63,7 @@ export class LoginComponent implements OnInit {
 
     // se ejecuta dentro de una zona para controlar error con template admin pro
     this.zone.run( () => {
-      this._usuarioService.loginGoogle( token )
+      this._usuarioService.loginGoogle( token, this.clinica )
       .subscribe( () => window.location.href = '/dashboard' // this.router.navigate(['/dashboard'])
       );
     });
@@ -77,7 +77,7 @@ export class LoginComponent implements OnInit {
     }
     const usuario = new Usuario(null, forma.value.email, forma.value.password);
 
-    this._usuarioService.login(usuario, forma.value.recuerdame)
+    this._usuarioService.login(usuario, forma.value.recuerdame, this.clinica)
     .subscribe(correcto => this.router.navigate(['/dashboard']));
   }
 

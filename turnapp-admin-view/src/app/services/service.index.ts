@@ -1,6 +1,7 @@
 export { UsuarioService } from './usuario/usuario.service';
 export { ClinicaService } from './clinica/clinica.service';
 export { ProfesionalService } from './profesional/profesional.service';
+export { ProfesionService } from './profesion/profesion.service';
 export { PacienteService } from './paciente/paciente.service';
 export { SettingsService } from './settings/settings.service';
 export { SharedService } from './shared/shared.service';

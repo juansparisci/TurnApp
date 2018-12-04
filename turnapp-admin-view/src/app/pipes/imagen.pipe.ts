@@ -34,6 +34,9 @@ export class ImagenPipe implements PipeTransform {
     case 'paciente':
     url += '/pacientes/' + img;
     break;
+    case 'especialidad':
+    url += '/especialidades/' + img;
+    break;
     default:
     console.log('Tipo de imagen inexistente. Solo se permite usuarios, profesionales, clinicas, obras sociales, pacientes.');
       url += '/usuarios/xxx';

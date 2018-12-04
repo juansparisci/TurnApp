@@ -5,6 +5,7 @@ var app = express();
 
 var Usuario = require('../models/usuario');
 var Profesional = require('../models/profesional');
+var Profesion = require('../models/profesion');
 var Clinica = require('../models/clinica');
 var ObraSocial = require('../models/obra-social');
 var Paciente = require('../models/paciente');
@@ -18,7 +19,7 @@ app.put('/:tipo/:id', (req, res, next) => {
     var id = req.params.id;
 
     // Validar tipos de colecciones en las que se puede subir fotos
-    var tiposValidos = ['profesionales', 'clinicas', 'usuarios', 'obras-sociales', 'pacientes'];
+    var tiposValidos = ['profesionales', 'clinicas', 'usuarios', 'obras-sociales', 'pacientes', 'especialidades'];
     if (tiposValidos.indexOf(tipo) < 0) {
         return res.status(400).json({
             ok: false,
@@ -51,7 +52,7 @@ app.put('/:tipo/:id', (req, res, next) => {
     }
 
     // Nombre de archivo personalizado
-    var nombreArchivo = `${ id }-${ new Date().getMilliseconds() }.${ extensionArchivo }`;
+    var nombreArchivo = `${ id.replace('|','') }-${ new Date().getMilliseconds() }.${ extensionArchivo }`;
 
     // Mover el archivo del temporal a un path
     var path = `./uploads/${ tipo }/${ nombreArchivo }`;
@@ -196,6 +197,104 @@ function subirPorTipo(tipo, id, nombreArchivo, res) {
                     ok: true,
                     mensaje: 'Imagen de paciente actualizada',
                     paciente: pacienteActualizada
+                });
+            });
+
+        });
+    }
+    if (tipo === 'especialidades') {
+        var idProfesion = id.split('|')[0];
+        var idEspecialidad = id.split('|')[1];
+        Profesion.findById(idProfesion, (err, profesion) => {
+            if (!profesion) {
+                return res.status(400).json({
+                    ok: false,
+                    mensaje: 'La profesión no existe',
+                    errors: { message: 'La profesión no existe' }
+                });
+            }
+            var especialidad = profesion.especialidades.id(idEspecialidad);
+            if (!especialidad) {
+                return res.status(400).json({
+                    ok: false,
+                    mensaje: 'La especialidad no existe',
+                    errors: { message: 'La especialidad no existe' }
+                });
+            }
+            especialidad.imgs.push(nombreArchivo);
+            profesion.save((err, profesionActualizada) => {
+                return res.status(200).json({
+                    ok: true,
+                    mensaje: 'Imagen de especialidad agregada',
+                    img: nombreArchivo
+                });
+            });
+
+        });
+    }
+}
+
+app.delete('/:tipo/:id/:nombreArchivo', (req, res, next) => {
+
+    var tipo = req.params.tipo;
+    var id = req.params.id;
+    var nombreArchivo = req.params.nombreArchivo;
+
+    // Validar tipos de colecciones en las que se puede subir fotos
+    var tiposValidos = ['profesionales', 'clinicas', 'usuarios', 'obras-sociales', 'pacientes', 'especialidades'];
+    if (tiposValidos.indexOf(tipo) < 0) {
+        return res.status(400).json({
+            ok: false,
+            mensaje: 'Tipo de colección no válida',
+            errors: { message: 'Tipo de colección no válida' }
+        });
+    }
+
+    if (!id) {
+        return res.status(400).json({
+            ok: false,
+            mensaje: 'No seleccionó imagen para eliminar. Id no válido',
+            errors: { message: 'Debe seleccionar una imagen' }
+        });
+    }
+
+
+    // Path del archivo
+    var path = `./uploads/${ tipo }/${ nombreArchivo }`;
+    // Elimina archivo
+    if (fs.existsSync(path)) {
+        fs.unlink(path, err => {});
+    }
+    eliminarPorTipo(tipo, nombreArchivo, id, res);
+
+
+});
+
+function eliminarPorTipo(tipo, nombreArchivo, id, res) {
+    if (tipo === 'especialidades') {
+        var idProfesion = id.split('|')[0];
+        var idEspecialidad = id.split('|')[1];
+        Profesion.findById(idProfesion, (err, profesion) => {
+            if (!profesion) {
+                return res.status(400).json({
+                    ok: false,
+                    mensaje: 'La profesión no existe',
+                    errors: { message: 'La profesión no existe' }
+                });
+            }
+            var especialidad = profesion.especialidades.id(idEspecialidad);
+            if (!especialidad) {
+                return res.status(400).json({
+                    ok: false,
+                    mensaje: 'La especialidad no existe',
+                    errors: { message: 'La especialidad no existe' }
+                });
+            }
+            especialidad.imgs.splice(especialidad.imgs.indexOf(nombreArchivo), 1);
+            profesion.save((err, profesionActualizada) => {
+                return res.status(200).json({
+                    ok: true,
+                    mensaje: 'Imagen de especialidad agregada'
                 });
             });
 

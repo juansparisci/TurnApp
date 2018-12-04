@@ -1,0 +1,58 @@
+<div class="row animated fadeIn">
+    <div class="col-md-12">
+        <div class="card card-body">
+
+            <h3 class="box-title m-b-0">Profesión: {{ profesion.nombre }}</h3>
+            <p class="text-muted m-b-30 font-13"> Bootstrap Elements </p>
+            <div class="row">
+                <div class="col-sm-12 col-xs-12">
+                    <form #f="ngForm" ngNativeValidate (ngSubmit)="guardarProfesion(f)">
+
+                        <div class="form-group">
+                            <div class="row">
+                                <label>Nombre </label>
+                                <input [(ngModel)]="profesion.nombre" name="profesion.nombre" type="text" class="form-control" placeholder="Nombre de Profesión" required>
+                            </div>
+                            <div class="row m-t-20">
+                                <input [(ngModel)]="profesion.activo" name="activo" id="activo" type="checkbox">
+                                <label for="activo">Activo</label>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-success waves-effect waves-light m-r-10"> <i class="fa fa-save"></i> Guardar</button>
+                        <a [routerLink]="'/profesiones'" class="btn btn-inverse waves-effect waves-light">Cancelar</a>
+
+
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="this.profesion._id" class="col-md-12">
+        <div class="card card-body">
+            <h4 class="card-title">Especialidades ( {{ this.profesion.especialidades?.length }} )</h4>
+            <div class="text-right">
+                <button type="button" [routerLink]="['/profesion/especialidad', this.profesion._id, 'nueva']" class="pointer  btn btn-rounded btn-primary btn-sm m-l-5">
+                          <i class="fa fa-plus"></i> Agregar Especialidad
+              </button>
+            </div>
+            <table class="table table-hover">
+                <tbody>
+                    <tr *ngFor="let especialidad of profesion.especialidades; let i = index">
+                        <td>
+                            <input readonly type="text" [(ngModel)]="especialidad.nombre" name="especialidad.nombre" class="form-control">
+                        </td>
+                        <td>
+
+                            <button type="button" [routerLink]="['/profesion/especialidad', profesion._id ,especialidad._id]" class="btn btn-primary m-1">
+            <i class="fa fa-edit"></i>
+          </button>
+                        </td>
+                    </tr>
+                </tbody>
+
+
+            </table>
+        </div>
+    </div>
+</div>

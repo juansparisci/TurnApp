@@ -203,7 +203,8 @@ function obtenerMenu(ROLE) {
             submenu: [
                 // {  titulo: 'Usuarios', url: '/usuarios'      },
                 { titulo: 'Clinicas', url: '/clinicas' },
-                { titulo: 'Profesionales', url: '/profesionales' }
+                { titulo: 'Profesionales', url: '/profesionales' },
+                { titulo: 'Profesiones', url: '/profesiones' }
             ]
         }
     ];
