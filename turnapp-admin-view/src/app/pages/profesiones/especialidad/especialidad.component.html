@@ -17,9 +17,9 @@
                                 <textarea [(ngModel)]="especialidad.descripcion" name="especialidad.descripcion" class="form-control" cols="30" rows="10" placeholder="Descripción de Especialidad" required></textarea>
                             </div>
                         </div>
-                        <button type="submit" class="btn btn-success waves-effect waves-light m-r-10"> <i class="fa fa-save"></i> Guardar</button>
-                        <a [routerLink]="['/profesion', idProfesion]" class="btn btn-inverse waves-effect waves-light">Cancelar</a>
-                        <button *ngIf="this.especialidad._id" type="button" (click)="eliminarEspecialidad()" class="btn btn-danger waves-effect waves-light m-l-10 float-right"> <i class="fa fa-trash"></i> Eliminar</button>
+                        <button type="submit" class="btn btn-success waves-effect waves-light m-r-10 m-t-10"> <i class="fa fa-save"></i> Guardar</button>
+                        <a [routerLink]="['/profesion', idProfesion]" class="btn btn-inverse waves-effect waves-light m-t-10">Cancelar</a>
+                        <button *ngIf="this.especialidad._id" type="button" (click)="eliminarEspecialidad()" class="btn btn-danger waves-effect waves-light m-l-10 m-t-10 float-right"> <i class="fa fa-trash"></i> Eliminar</button>
 
 
                     </form>

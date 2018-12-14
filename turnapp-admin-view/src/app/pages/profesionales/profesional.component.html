@@ -21,6 +21,20 @@
                               <option *ngFor="let clinica of clinicas" [value]="clinica._id">{{ clinica.nombre }}</option>
                             </select>
                         </div>
+                        <div class="form-group">
+                            <label>Profesión</label>
+                            <select (change)="cambioProfesion( $event.target.value )" [(ngModel)]="profesional.profesion" name="profesion" class="form-control" required>
+                              <option value="">Seleccione profesión</option>
+                              <option *ngFor="let profesion of profesiones" [value]="profesion._id">{{ profesion.nombre }}</option>
+                            </select>
+                        </div>
+                        <div *ngIf="this.profesion" class="form-group">
+                            <label>Especialidades</label>
+                            <div class="list-group">
+                                <button type="button" *ngFor="let especialidad of this.profesion.especialidades" [ngClass]="{'active': (profesional.especialidades.indexOf(especialidad._id)>-1)}" (click)="CambioEspecialidad(especialidad._id)" class="list-group-item list-group-item-action pointer">{{ especialidad.nombre }}</button>
+                            </div>
+                        </div>
+
                         <button type="submit" class="btn btn-success waves-effect waves-light m-r-10"> <i class="fa fa-save"></i> Guardar</button>
                         <a [routerLink]="'/profesionales'" class="btn btn-inverse waves-effect waves-light">Cancelar</a>
                     </form>

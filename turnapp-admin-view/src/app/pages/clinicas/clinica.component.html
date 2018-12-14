@@ -10,7 +10,7 @@
                             <label>Nombre </label>
                             <input [(ngModel)]="clinica.nombre" name="nombre" type="text" class="form-control" placeholder="Nombre de Clinica" required>
                             <label>URL </label> <span class="font-10"><i> Sin espacios ni acentos (Ejemplo: <b>iDentaGrupoOdontologico</b> )</i></span>
-                            <input [(ngModel)]="clinica.urlId" pattern="^[A-Za-z0-9_.]+$" name="idUrl" type="text" class="form-control" placeholder="URL de acceso a la clínica" required>
+                            <input [(ngModel)]="clinica.urlId" pattern="^[A-Za-z0-9_:/.]+$" name="idUrl" type="text" class="form-control" placeholder="URL de acceso a la clínica" required>
                             <label>Email </label>
                             <input [(ngModel)]="datosContacto.email" name="email" type="email" class="form-control" placeholder="Ingrese el email de la Clínica">
                             <label>Teléfono Principal </label>

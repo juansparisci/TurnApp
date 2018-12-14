@@ -18,7 +18,6 @@ export class ProfesionesComponent implements OnInit {
   cargarProfesiones() {
     this._profesionesService.cargarProfesiones().subscribe(
       (resp: any) => {
-        console.log(resp);
         this.profesiones = resp;
       }
     );

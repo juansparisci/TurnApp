@@ -11,7 +11,7 @@ import { NgForm } from '@angular/forms';
   styles: []
 })
 export class ObraSocialComponent implements OnInit {
-   obraSocial: ObraSocial = new ObraSocial('', '', '');
+   obraSocial: ObraSocial = new ObraSocial('', '', '', true);
   constructor(
                private _obraSocialService: ObraSocialService,
                private router: Router,

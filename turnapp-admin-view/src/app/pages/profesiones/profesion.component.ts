@@ -10,7 +10,7 @@ import { NgForm } from '@angular/forms';
   styles: []
 })
 export class ProfesionComponent implements OnInit {
-   profesion: Profesion = new Profesion('');
+   profesion: Profesion = new Profesion('', '', true);
   constructor(
                private _profesionService: ProfesionService,
                private router: Router,
