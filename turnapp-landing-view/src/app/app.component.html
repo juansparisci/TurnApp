@@ -1,4 +1,4 @@
-<div id="wrapper">
+<div *ngIf="this.clinica" id="wrapper">
 
     <nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
         <div class="top-area">
@@ -8,7 +8,12 @@
                         <p class="bold text-left"></p>
                     </div>
                     <div class="col-sm-6 col-md-6">
-                        <p class="bold text-right">Llámenos 0341 153493361</p>
+                        <p *ngIf="this.clinica._id" class="bold text-right">
+
+                            <a [href]="'tel:'+this.clinica.datosContacto.telefonos.principal"> <i class="fas fa-2x fa-phone m-5"></i> </a>
+                            <a href="https://m.me/identa.odontologia"> <i class="fab fa-2x fa-facebook-messenger m-5"></i> </a>
+                            <a [href]="'https://api.whatsapp.com/send?phone='+this.clinica.datosContacto.telefonos.principal"><i class="fab fa-2x fa-whatsapp m-5"></i></a>
+                        </p>
                     </div>
                 </div>
             </div>
@@ -17,10 +22,10 @@
 
             <div class="navbar-header page-scroll">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse">
-                  <i class="fa fa-bars"></i>
+                  <i class="fas fa-bars"></i>
               </button>
                 <a class="navbar-brand" href="index.html">
-                    <img src="assets/img/logo.png" alt="" width="150" height="40" />
+                    <img *ngIf="this.clinica._id" [src]="this.clinica.img | imagen: 'clinica'  " alt="" height="45" />
                 </a>
             </div>
 
@@ -63,12 +68,12 @@
                             <div class="wow fadeInRight" data-wow-delay="0.1s">
 
                                 <ul class="lead-list">
-                                    <li><span class="fa fa-check fa-2x icon-success"></span> <span class="list"><strong>Affordable monthly premium packages</strong><br />Lorem ipsum dolor sit amet, in verterem persecuti vix, sit te meis</span></li>
-                                    <li><span class="fa fa-check fa-2x icon-success"></span> <span class="list"><strong>Choose your favourite doctor</strong><br />Lorem ipsum dolor sit amet, in verterem persecuti vix, sit te meis</span></li>
-                                    <li><span class="fa fa-check fa-2x icon-success"></span> <span class="list"><strong>Only use friendly environment</strong><br />Lorem ipsum dolor sit amet, in verterem persecuti vix, sit te meis</span></li>
+                                    <li><span class="fas fa-check fa-2x icon-success"></span> <span class="list"><strong>Affordable monthly premium packages</strong><br />Lorem ipsum dolor sit amet, in verterem persecuti vix, sit te meis</span></li>
+                                    <li><span class="fas fa-check fa-2x icon-success"></span> <span class="list"><strong>Choose your favourite doctor</strong><br />Lorem ipsum dolor sit amet, in verterem persecuti vix, sit te meis</span></li>
+                                    <li><span class="fas fa-check fa-2x icon-success"></span> <span class="list"><strong>Only use friendly environment</strong><br />Lorem ipsum dolor sit amet, in verterem persecuti vix, sit te meis</span></li>
                                 </ul>
                                 <p class="text-right wow bounceIn" data-wow-delay="0.4s">
-                                    <a href="#" class="btn btn-skin btn-lg">Learn more <i class="fa fa-angle-right"></i></a>
+                                    <a href="#" class="btn btn-skin btn-lg">Learn more <i class="fas fa-angle-right"></i></a>
                                 </p>
                             </div>
                         </div>
@@ -96,7 +101,7 @@
                     <div class="wow fadeInUp" data-wow-delay="0.2s">
                         <div class="box text-center">
 
-                            <i class="fa fa-check fa-3x circled bg-skin"></i>
+                            <i class="fas fa-check fa-3x circled bg-skin"></i>
                             <h4 class="h-bold">Make an appoinment</h4>
                             <p>
                                 Lorem ipsum dolor sit amet, nec te mollis utroque honestatis, ut utamur molestiae vix, graecis eligendi ne.
@@ -108,7 +113,7 @@
                     <div class="wow fadeInUp" data-wow-delay="0.2s">
                         <div class="box text-center">
 
-                            <i class="fa fa-list-alt fa-3x circled bg-skin"></i>
+                            <i class="fas fa-list-alt fa-3x circled bg-skin"></i>
                             <h4 class="h-bold">Choose your package</h4>
                             <p>
                                 Lorem ipsum dolor sit amet, nec te mollis utroque honestatis, ut utamur molestiae vix, graecis eligendi ne.
@@ -119,7 +124,7 @@
                 <div class="col-sm-3 col-md-3">
                     <div class="wow fadeInUp" data-wow-delay="0.2s">
                         <div class="box text-center">
-                            <i class="fa fa-user-md fa-3x circled bg-skin"></i>
+                            <i class="fas fa-user-md fa-3x circled bg-skin"></i>
                             <h4 class="h-bold">Help by specialist</h4>
                             <p>
                                 Lorem ipsum dolor sit amet, nec te mollis utroque honestatis, ut utamur molestiae vix, graecis eligendi ne.
@@ -131,7 +136,7 @@
                     <div class="wow fadeInUp" data-wow-delay="0.2s">
                         <div class="box text-center">
 
-                            <i class="fa fa-hospital-o fa-3x circled bg-skin"></i>
+                            <i class="fas fa-hospital fa-3x circled bg-skin"></i>
                             <h4 class="h-bold">Get diagnostic report</h4>
                             <p>
                                 Lorem ipsum dolor sit amet, nec te mollis utroque honestatis, ut utamur molestiae vix, graecis eligendi ne.
@@ -191,7 +196,7 @@
                     <div class="wow fadeInRight" data-wow-delay="0.1s">
                         <div class="service-box">
                             <div class="service-icon">
-                                <span class="fa fa-stethoscope fa-3x"></span>
+                                <span class="fas fa-stethoscope fa-3x"></span>
                             </div>
                             <div class="service-desc">
                                 <h5 class="h-light">Medical checkup</h5>
@@ -203,7 +208,7 @@
                     <div class="wow fadeInRight" data-wow-delay="0.2s">
                         <div class="service-box">
                             <div class="service-icon">
-                                <span class="fa fa-wheelchair fa-3x"></span>
+                                <span class="fas fa-wheelchair fa-3x"></span>
                             </div>
                             <div class="service-desc">
                                 <h5 class="h-light">Nursing Services</h5>
@@ -214,7 +219,7 @@
                     <div class="wow fadeInRight" data-wow-delay="0.3s">
                         <div class="service-box">
                             <div class="service-icon">
-                                <span class="fa fa-plus-square fa-3x"></span>
+                                <span class="fas fa-plus-square fa-3x"></span>
                             </div>
                             <div class="service-desc">
                                 <h5 class="h-light">Pharmacy</h5>
@@ -230,7 +235,7 @@
                     <div class="wow fadeInRight" data-wow-delay="0.1s">
                         <div class="service-box">
                             <div class="service-icon">
-                                <span class="fa fa-h-square fa-3x"></span>
+                                <span class="fas fa-h-square fa-3x"></span>
                             </div>
                             <div class="service-desc">
                                 <h5 class="h-light">Gyn Care</h5>
@@ -242,7 +247,7 @@
                     <div class="wow fadeInRight" data-wow-delay="0.2s">
                         <div class="service-box">
                             <div class="service-icon">
-                                <span class="fa fa-filter fa-3x"></span>
+                                <span class="fas fa-filter fa-3x"></span>
                             </div>
                             <div class="service-desc">
                                 <h5 class="h-light">Neurology</h5>
@@ -253,7 +258,7 @@
                     <div class="wow fadeInRight" data-wow-delay="0.3s">
                         <div class="service-box">
                             <div class="service-icon">
-                                <span class="fa fa-user-md fa-3x"></span>
+                                <span class="fas fa-user-md fa-3x"></span>
                             </div>
                             <div class="service-desc">
                                 <h5 class="h-light">Sleep Center</h5>
@@ -574,10 +579,10 @@
                             <h2>Basic Fit 1 Package</h2>
                             <h3>$33<sup>.99</sup> <span>/ one time</span></h3>
                             <ul>
-                                <li>Anthropometry (BMI, WH Ratio) <i class="fa fa-check icon-success"></i></li>
-                                <li>Post Examination Review <i class="fa fa-check icon-success"></i></li>
-                                <li>General Screening – Basic <i class="fa fa-check icon-success"></i></li>
-                                <li><del>Health Screening Report</del> <i class="fa fa-times icon-danger"></i></li>
+                                <li>Anthropometry (BMI, WH Ratio) <i class="fas fa-check icon-success"></i></li>
+                                <li>Post Examination Review <i class="fas fa-check icon-success"></i></li>
+                                <li>General Screening – Basic <i class="fas fa-check icon-success"></i></li>
+                                <li><del>Health Screening Report</del> <i class="fas fa-times icon-danger"></i></li>
                             </ul>
 
                             <div class="price-bottom">
@@ -593,11 +598,11 @@
                             <h2>Golden Glow Package</h2>
                             <h3>$65<sup>.99</sup> <span>/ one time</span></h3>
                             <ul>
-                                <li>Anthropometry (BMI, WH Ratio) <i class="fa fa-check icon-success"></i></li>
-                                <li>Post Examination Review <i class="fa fa-check icon-success"></i></li>
-                                <li>General Screening – Basic <i class="fa fa-check icon-success"></i></li>
-                                <li>Body Composition Analysis <i class="fa fa-check icon-success"></i></li>
-                                <li>GR Assessment & Scoring <i class="fa fa-check icon-success"></i></li>
+                                <li>Anthropometry (BMI, WH Ratio) <i class="fas fa-check icon-success"></i></li>
+                                <li>Post Examination Review <i class="fas fa-check icon-success"></i></li>
+                                <li>General Screening – Basic <i class="fas fa-check icon-success"></i></li>
+                                <li>Body Composition Analysis <i class="fas fa-check icon-success"></i></li>
+                                <li>GR Assessment & Scoring <i class="fas fa-check icon-success"></i></li>
                             </ul>
 
                             <div class="price-bottom">
@@ -613,10 +618,10 @@
                             <h2>Basic Fit 2 Package</h2>
                             <h3>$47<sup>.99</sup> <span>/ one time</span></h3>
                             <ul>
-                                <li>Anthropometry (BMI, WH Ratio) <i class="fa fa-check icon-success"></i></li>
-                                <li>Post Examination Review <i class="fa fa-check icon-success"></i></li>
-                                <li>General Screening – Regular <i class="fa fa-check icon-success"></i></li>
-                                <li><del>Health Screening Report</del> <i class="fa fa-times icon-danger"></i></li>
+                                <li>Anthropometry (BMI, WH Ratio) <i class="fas fa-check icon-success"></i></li>
+                                <li>Post Examination Review <i class="fas fa-check icon-success"></i></li>
+                                <li>General Screening – Regular <i class="fas fa-check icon-success"></i></li>
+                                <li><del>Health Screening Report</del> <i class="fas fa-times icon-danger"></i></li>
                             </ul>
 
                             <div class="price-bottom">
@@ -708,20 +713,20 @@
                             <ul>
                                 <li>
                                     <span class="fa-stack fa-lg">
-                <i class="fa fa-circle fa-stack-2x"></i>
-                <i class="fa fa-calendar-o fa-stack-1x fa-inverse"></i>
+                <i class="fas fa-circle fa-stack-2x"></i>
+                <i class="fas fa-calendar fa-stack-1x fa-inverse"></i>
               </span> Monday - Saturday, 8am to 10pm
                                 </li>
                                 <li>
                                     <span class="fa-stack fa-lg">
-                <i class="fa fa-circle fa-stack-2x"></i>
-                <i class="fa fa-phone fa-stack-1x fa-inverse"></i>
+                <i class="fas fa-circle fa-stack-2x"></i>
+                <i class="fas fa-phone fa-stack-1x fa-inverse"></i>
               </span> +62 0888 904 711
                                 </li>
                                 <li>
                                     <span class="fa-stack fa-lg">
-                <i class="fa fa-circle fa-stack-2x"></i>
-                <i class="fa fa-envelope-o fa-stack-1x fa-inverse"></i>
+                <i class="fas fa-circle fa-stack-2x"></i>
+                <i class="fas fa-envelope fa-stack-1x fa-inverse"></i>
               </span> hello@medicio.com
                                 </li>
 
@@ -741,11 +746,11 @@
                         <div class="widget">
                             <h5>Follow us</h5>
                             <ul class="company-social">
-                                <li class="social-facebook"><a href="#"><i class="fa fa-facebook"></i></a></li>
-                                <li class="social-twitter"><a href="#"><i class="fa fa-twitter"></i></a></li>
-                                <li class="social-google"><a href="#"><i class="fa fa-google-plus"></i></a></li>
-                                <li class="social-vimeo"><a href="#"><i class="fa fa-vimeo-square"></i></a></li>
-                                <li class="social-dribble"><a href="#"><i class="fa fa-dribbble"></i></a></li>
+                                <li class="social-facebook"><a href="#"><i class="fab fa-facebook"></i></a></li>
+                                <li class="social-twitter"><a href="#"><i class="fab fa-twitter"></i></a></li>
+                                <li class="social-google"><a href="#"><i class="fab fa-google-plus"></i></a></li>
+                                <li class="social-vimeo"><a href="#"><i class="fab fa-vimeo-square"></i></a></li>
+                                <li class="social-dribble"><a href="#"><i class="fab fa-dribbble"></i></a></li>
                             </ul>
                         </div>
                     </div>
@@ -783,4 +788,4 @@
     </footer>
 
 </div>
-<a href="#" class="scrollup"><i class="fa fa-angle-up active"></i></a>
+<a href="#" class="scrollup"><i class="fas fa-angle-up active"></i></a>

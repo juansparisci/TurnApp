@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Usuario } from '../../models/usuario.model';
 import { HttpClient } from '@angular/common/http';
-import { URL_SERVICIOS, ID_EMPRESA } from '../../config/config';
+import { URL_SERVICIOS } from '../../config/config';
 import { map, catchError } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { SubirArchivoService } from '../subirArchivo/subir-archivo.service';
@@ -65,6 +65,7 @@ export class UsuarioService {
     localStorage.setItem('clinica', JSON.stringify(clinica) );
     localStorage.setItem('menu', JSON.stringify(menu) );
     this.usuario = usuario;
+    this.clinica = clinica;
     this.token = token;
     this.menu = menu;
   }

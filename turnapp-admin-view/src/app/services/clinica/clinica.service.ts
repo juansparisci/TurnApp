@@ -63,7 +63,7 @@ export class ClinicaService {
       catchError( err => {
        swal('Error al actualizar clínica', err.error.mensaje, 'error');
        if (err.status === 401) {
-        this.router.navigate(['login']);
+        this.router.navigate(['/' + this._usuarioService.clinica.urlId, 'login']);
        }
        return throwError(err);
      })
