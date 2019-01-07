@@ -2,7 +2,7 @@ var express = require('express');
 var fileUpload = require('express-fileupload');
 var fs = require('fs');
 var app = express();
-
+var mdAutenticacion = require('../middlewares/autenticacion');
 var Usuario = require('../models/usuario');
 var Profesional = require('../models/profesional');
 var Profesion = require('../models/profesion');
@@ -13,7 +13,7 @@ var Paciente = require('../models/paciente');
 app.use(fileUpload());
 
 // Rutas
-app.put('/:tipo/:id', (req, res, next) => {
+app.put('/:tipo/:id', mdAutenticacion.verificaToken, (req, res, next) => {
 
     var tipo = req.params.tipo;
     var id = req.params.id;

@@ -50,8 +50,8 @@ app.post('/', mdAutenticacion.verificaToken, (req, res) => {
         usuario: req.usuario._id,
         clinica: body.clinica,
         profesion: body.profesion,
-        especialidades: body.especialidades
-
+        especialidades: body.especialidades,
+        cartaPresentacion: body.cartaPresentacion
     });
     profesional.save((err, profesionalGuardado) => {
         if (err) {
@@ -153,6 +153,7 @@ app.put('/:id', mdAutenticacion.verificaToken, (req, res) => {
         profesional.profesion = body.profesion;
         profesional.especialidades = body.especialidades;
         profesional.img = body.img;
+        profesional.cartaPresentacion = body.cartaPresentacion;
 
         profesional.save((er, profesionalGuardado) => {
             if (er) {

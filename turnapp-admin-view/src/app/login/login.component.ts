@@ -30,7 +30,7 @@ export class LoginComponent implements OnInit {
               private activatedRoute: ActivatedRoute,
               public imagen: ImagenPipe) {
                 activatedRoute.params.subscribe( params => {
-                  const urlClinica = params['urlClinica'];
+                  const urlClinica = encodeURIComponent(decodeURIComponent(params['urlClinica']));
                   _clinicaServie.obtenerClinicaPorUrl(urlClinica).subscribe((cli: any) => {
                        this.clinica = cli.clinica;
                       }

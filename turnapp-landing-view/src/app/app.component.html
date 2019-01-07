@@ -1,5 +1,6 @@
 <div *ngIf="this.clinica" id="wrapper">
 
+
     <nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
         <div class="top-area">
             <div class="container">
@@ -11,8 +12,8 @@
                         <p *ngIf="this.clinica._id" class="bold text-right">
 
                             <a [href]="'tel:'+this.clinica.datosContacto.telefonos.principal"> <i class="fas fa-2x fa-phone m-5"></i> </a>
-                            <a href="https://m.me/identa.odontologia"> <i class="fab fa-2x fa-facebook-messenger m-5"></i> </a>
-                            <a [href]="'https://api.whatsapp.com/send?phone='+this.clinica.datosContacto.telefonos.principal"><i class="fab fa-2x fa-whatsapp m-5"></i></a>
+                            <a [href]="'https://m.me/' + this.clinica.datosContacto.facebook"> <i class="fab fa-2x fa-facebook-messenger m-5"></i> </a>
+                            <a [href]="'https://api.whatsapp.com/send?phone='+this.clinica.datosContacto.telefonos.whatsapp"><i class="fab fa-2x fa-whatsapp m-5"></i></a>
                         </p>
                     </div>
                 </div>
@@ -24,27 +25,35 @@
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse">
                   <i class="fas fa-bars"></i>
               </button>
-                <a class="navbar-brand" href="index.html">
-                    <img *ngIf="this.clinica._id" [src]="this.clinica.img | imagen: 'clinica'  " alt="" height="45" />
-                </a>
+
+                <div class="navbar-brand">
+                    <ng-container *ngIf="this.edit; else readOnlyLogo">
+                        <img (click)="this.clickLogo()" class="pointer" *ngIf="this.clinica._id" [src]="this.clinica.img | imagen: 'clinica'  " alt="" height="45" />
+                    </ng-container>
+                    <ng-template #readOnlyLogo>
+                        <img *ngIf="this.clinica._id" [src]="this.clinica.img | imagen: 'clinica'  " alt="" height="45" />
+                    </ng-template>
+                </div>
+
+
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse navbar-right navbar-main-collapse">
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="#intro">Home</a></li>
-                    <li><a href="#service">Service</a></li>
-                    <li><a href="#doctor">Doctors</a></li>
-                    <li><a href="#facilities">Facilities</a></li>
-                    <li><a href="#pricing">Pricing</a></li>
-                    <li class="dropdown">
+                    <li class="active"><a href="#intro">Principal</a></li>
+                    <li><a href="#service">Especialidades</a></li>
+                    <li><a href="#doctor">Profesionales</a></li>
+                    <li><a href="#facilities">Equipamiento</a></li>
+                    <li><a href="#pricing">Precios</a></li>
+                    <!-- <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="badge custom-badge red pull-right">Extra</span>More <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li><a href="index.html">Home CTA</a></li>
                             <li><a href="index-form.html">Home Form</a></li>
                             <li><a href="index-video.html">Home video</a></li>
                         </ul>
-                    </li>
+                    </li> -->
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
@@ -59,7 +68,14 @@
                 <div class="row">
                     <div class="col-lg-6">
                         <div class="wow fadeInDown" data-wow-offset="0" data-wow-delay="0.1s">
-                            <h2 class="h-ultra">Grupo odontológico especializado</h2>
+                            <ng-container *ngIf="this.edit; else readOnlySubtitulo">
+                                <h2 class="h-ultra" (click)="textEditModal('sitioInstitucional.principal.eslogan')">{{ this.clinica.sitioInstitucional?.principal.eslogan ? this.clinica.sitioInstitucional?.principal.eslogan : 'Ingrese el eslogan' }}</h2>
+                            </ng-container>
+                            <ng-template #readOnlySubtitulo>
+                                <h2 class="h-ultra">{{ this.clinica.sitioInstitucional?.principal.eslogan }}</h2>
+                            </ng-template>
+
+
                         </div>
                         <div class="wow fadeInUp" data-wow-offset="0" data-wow-delay="0.1s">
                             <h4 class="h-light">Brindando la mejor calidad al cuidado de tu salud</h4>
@@ -789,3 +805,4 @@
 
 </div>
 <a href="#" class="scrollup"><i class="fas fa-angle-up active"></i></a>
+<app-modal-upload></app-modal-upload>

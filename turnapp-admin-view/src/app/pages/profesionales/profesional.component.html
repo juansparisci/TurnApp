@@ -22,6 +22,10 @@
                             </select>
                         </div>
                         <div class="form-group">
+                            <label>Carta de Presentación </label>
+                            <textarea [(ngModel)]="profesional.cartaPresentacion" name="cartaPresentacion" class="form-control" cols="30" rows="10" placeholder="Ingrese su información profesional. La mísma será su carta de presentación." required></textarea>
+                        </div>
+                        <div class="form-group">
                             <label>Profesión</label>
                             <select (change)="cambioProfesion( $event.target.value )" [(ngModel)]="profesional.profesion" name="profesion" class="form-control" required>
                               <option value="">Seleccione profesión</option>

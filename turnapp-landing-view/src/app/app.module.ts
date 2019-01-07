@@ -5,10 +5,12 @@ import { AppComponent } from './app.component';
 import { ServiceModule } from './services/service.module';
  import { APP_ROUTES } from './app.routes';
 import { PipesModule } from './pipes/pipes.module';
+import { ModalUploadComponent } from './components/modal-upload/modal-upload.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    ModalUploadComponent
   ],
   imports: [
     BrowserModule,

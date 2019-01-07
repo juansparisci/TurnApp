@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
-
 import {
-        ClinicaService
+        ClinicaService,
+        SubirArchivoService
       } from './service.index';
 
 @NgModule({
@@ -12,8 +12,9 @@ import {
     HttpClientModule
   ],
   providers: [
-    ClinicaService
+    ClinicaService,
+    SubirArchivoService
   ],
-  declarations: []
+  declarations: [  ]
 })
 export class ServiceModule { }

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { UsuarioService } from '../../services/service.index';
 declare function init_plugins();
 @Component({
   selector: 'app-nopagefound',
@@ -24,7 +25,10 @@ declare function init_plugins();
 })
 export class NopagefoundComponent implements OnInit {
   anio: number = new Date().getFullYear();
-  constructor() { }
+  urlId: string = '';
+  constructor( private _usuarioService: UsuarioService ) {
+    this.urlId = encodeURIComponent(this._usuarioService.clinica.urlId);
+    }
 
   ngOnInit() {
     init_plugins();

@@ -2,9 +2,11 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { UsuarioService } from '../usuario/usuario.service';
 import { URL_SERVICIOS } from '../../config/config';
-import { map } from 'rxjs/operators';
+import { map, catchError } from 'rxjs/operators';
+import { throwError } from 'rxjs';
 import { Profesion } from '../../models/profesion';
 import { Especialidad } from '../../models/especialidad';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +14,8 @@ import { Especialidad } from '../../models/especialidad';
 export class ProfesionService {
   totalProfesiones: number;
   constructor( private http: HttpClient,
-              private _usuarioService: UsuarioService ) { }
+              private _usuarioService: UsuarioService,
+              private router: Router) { }
 
               cargarProfesiones() {
                 const url = URL_SERVICIOS + '/profesion/';
@@ -103,7 +106,14 @@ export class ProfesionService {
                 return this.http.get(url).pipe(
                   map( (resp: any) => {
                     return resp.especialidad;
-                  })
+                  }),
+      catchError( err => {
+       swal('Error al cargar la especialidad', err.error.mensaje, 'error');
+       if (err.status === 401) {
+        this.router.navigate(['/' + encodeURIComponent(this._usuarioService.clinica.urlId), 'login']);
+       }
+       return throwError(err);
+     })
                 );
               }
               eliminarImagenEspecialidad( nombreImagen: string, idProfesion: string, idEspecialidad: string ) {

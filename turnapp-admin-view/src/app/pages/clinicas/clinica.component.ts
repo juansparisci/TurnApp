@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { ClinicaService } from '../../services/service.index';
+import { ClinicaService, UsuarioService } from '../../services/service.index';
 import { Clinica } from '../../models/clinica.model';
 import { DatosContacto } from '../../models/datos-contacto.model';
 
@@ -14,12 +14,13 @@ import { ModalUploadService } from '../../components/modal-upload/modal-upload.s
 })
 export class ClinicaComponent implements OnInit {
    clinica: Clinica = new Clinica('', '', '');
-   datosContacto: DatosContacto = new DatosContacto({principal: '' } , '');
+   datosContacto: DatosContacto = new DatosContacto({principal: '', whatsapp: '' } , '', '');
   constructor(
                private _clinicaService: ClinicaService,
                private router: Router,
                private activatedRoute: ActivatedRoute,
-               private _modalUploadService: ModalUploadService
+               private _modalUploadService: ModalUploadService,
+               private _usuarioService: UsuarioService
               ) {
                 activatedRoute.params.subscribe( params => {
                   const id = params['id'];
@@ -87,5 +88,8 @@ export class ClinicaComponent implements OnInit {
       });
       }
     });
+  }
+  editarSitio() {
+    window.open(this.clinica.urlId + 'edit/' + this._usuarioService.token);
   }
 }

@@ -7,6 +7,18 @@ export class Clinica {
         public img?: string,
         public _id?: string,
         public urlId?: string,
+        public sitioInstitucional?: {
+                principal: {
+                        eslogan: string,
+                        descripcion: string,
+                        imgPrincipal: string,
+                        imgBGPrincipal: string,
+                        items: [{
+                                tituloItem: string,
+                                descripcionItem: string
+                        }]
+                }
+        },
         public datosContacto?: DatosContacto
     ) { }
 

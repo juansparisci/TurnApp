@@ -8,6 +8,7 @@ var profesionalSchema = new Schema({
     usuario: { type: Schema.Types.ObjectId, ref: 'Usuario', required: false },
     clinica: { type: Schema.Types.ObjectId, ref: 'Clinica', required: [true, 'La clínica es un campo obligatorio'] },
     profesion: { type: Schema.Types.ObjectId, ref: 'Profesion', required: [true, 'La profesión es un campo obligatorio'] },
-    especialidades: [{ type: String, required: false }]
+    especialidades: [{ type: String, required: false }],
+    cartaPresentacion: { type: String, required: false }
 }, { collection: 'profesionales' });
 module.exports = mongoose.model('Profesional', profesionalSchema);

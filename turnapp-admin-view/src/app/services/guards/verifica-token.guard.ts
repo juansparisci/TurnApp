@@ -17,7 +17,7 @@ export class VerificaTokenGuard implements CanActivate {
         const payload = JSON.parse( atob(token.split('.')[1]) );
         const expirado = this.expirado(payload.exp);
         if (expirado) {
-          this.router.navigate(['/' + this._usuarioService.clinica.urlId, 'login']);
+          this.router.navigate(['/' + encodeURIComponent(this._usuarioService.clinica.urlId), 'login']);
           return false;
         } else {
          return this.verificaRenueva(payload.exp);

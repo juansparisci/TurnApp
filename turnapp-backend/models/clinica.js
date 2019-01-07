@@ -4,15 +4,37 @@ var clinicaSchema = new Schema({
     nombre: { type: String, required: [true, 'El nombre es necesario'] },
     urlId: { type: String, unique: true, required: [true, 'El id de url es necesario'] },
     img: { type: String, required: false },
+    sitioInstitucional: {
+        required: false,
+        type: {
+            principal: {
+                required: false,
+                type: {
+                    eslogan: { type: String, required: false },
+                    descripcion: { type: String, required: false },
+                    imgPrincipal: { type: String, required: false },
+                    imgBGPrincipal: { type: String, required: false },
+                    items: [{
+                        type: {
+                            tituloItem: { type: String, required: false },
+                            descripcionItem: { type: String, required: false }
+                        }
+                    }]
+                }
+            }
+        }
+    },
     datosContacto: {
         required: false,
         type: {
             telefonos: {
                 required: false,
                 type: {
-                    principal: { type: String, required: false }
+                    principal: { type: String, required: false },
+                    whatsapp: { type: String, required: false }
                 }
             },
+            facebook: { type: String, required: false },
             email: { type: String, required: false, validator: function(v) { return /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/; } }
         }
     },

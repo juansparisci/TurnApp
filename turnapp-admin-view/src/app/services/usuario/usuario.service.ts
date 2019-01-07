@@ -108,7 +108,7 @@ export class UsuarioService {
     localStorage.removeItem('usuario');
     localStorage.removeItem('menu');
     localStorage.removeItem('clinica');
-    this.router.navigate([this.clinica.urlId, 'login']);
+    this.router.navigate([encodeURIComponent(this.clinica.urlId), 'login']);
   }
   //#endregion
 
@@ -143,7 +143,7 @@ export class UsuarioService {
     );
   }
   cambiarImagen( file: File, idUsuario: string) {
-    this._subirArchivoService.subirArchivo(file, 'usuarios', idUsuario)
+    this._subirArchivoService.subirArchivo(file, 'usuarios', idUsuario, this.token)
     .then( (resp: any) => {
       this.usuario.img = resp.usuario.img;
       swal( 'Imagen Actualizada', this.usuario.nombre, 'success');

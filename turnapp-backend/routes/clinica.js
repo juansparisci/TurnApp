@@ -176,6 +176,10 @@
          if (body.datosContacto) {
              clinica.datosContacto = body.datosContacto;
          }
+         if (body.sitioInstitucional) {
+             clinica.sitioInstitucional = body.sitioInstitucional;
+         }
+
          clinica.save((er, clinicaGuardada) => {
              if (er) {
                  return res.status(400).json({
