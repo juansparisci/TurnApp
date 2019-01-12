@@ -104,7 +104,7 @@
          nombre: body.nombre,
          img: body.img,
          usuario: req.usuario._id,
-         idUrl: body.idUrl
+         urlId: body.urlId
      });
      clinica.save((err, clinicaGuardada) => {
          if (err) {
@@ -176,8 +176,47 @@
          if (body.datosContacto) {
              clinica.datosContacto = body.datosContacto;
          }
+
+         clinica.save((er, clinicaGuardada) => {
+             if (er) {
+                 return res.status(400).json({
+                     ok: false,
+                     mensaje: 'Error al actualizar clínica',
+                     errors: er
+                 });
+             }
+             res.status(200).json({
+                 ok: true,
+                 clinica: clinicaGuardada
+             });
+         });
+
+     });
+ });
+ /**
+  * Actualizar Sitio de Clínica
+  */
+ app.put('/sitio/:id', mdAutenticacion.verificaToken, (req, res) => {
+     var id = req.params.id;
+     var body = req.body;
+     Clinica.findById(id, (err, clinica) => {
+         if (err) {
+             return res.status(500).json({
+                 ok: false,
+                 mensaje: 'Error al buscar clínica',
+                 errors: err
+             });
+         }
+         if (!clinica) {
+             return res.status(400).json({
+                 ok: false,
+                 mensaje: 'La clínica con el id ' + id + ' no existe',
+                 errors: { message: 'No existe una clínica con ese id' }
+             });
+         }
          if (body.sitioInstitucional) {
              clinica.sitioInstitucional = body.sitioInstitucional;
+             // clinica.sitioInstitucional.principal.items.push({ tituloItem: 'El Title', descripcionItem: 'La Desc' });
          }
 
          clinica.save((er, clinicaGuardada) => {

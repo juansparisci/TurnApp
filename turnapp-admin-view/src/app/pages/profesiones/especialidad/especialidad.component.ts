@@ -20,7 +20,7 @@ export class EspecialidadComponent implements OnInit {
                 activatedRoute.params.subscribe( params => {
                   this.idProfesion = params['idProfesion'];
                   this.idEspecialidad = params['idEspecialidad'];
-                  if (this.idEspecialidad !== 'nuevo') {
+                  if (this.idEspecialidad !== 'nueva') {
                     this.cargarEspecialidad(this.idEspecialidad);
                   }
                 });

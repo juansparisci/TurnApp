@@ -14,6 +14,7 @@ export class Clinica {
                         imgPrincipal: string,
                         imgBGPrincipal: string,
                         items: [{
+                                _id?: string,
                                 tituloItem: string,
                                 descripcionItem: string
                         }]

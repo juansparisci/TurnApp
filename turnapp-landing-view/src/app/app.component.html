@@ -1,12 +1,17 @@
 <div *ngIf="this.clinica" id="wrapper">
 
 
+
     <nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
         <div class="top-area">
             <div class="container">
+
                 <div class="row">
                     <div class="col-sm-6 col-md-6">
-                        <p class="bold text-left"></p>
+                        <div *ngIf="this.hayCambios" class="alert alert-warning" style="position: absolute; z-index: 1;" role="alert">
+                            <a (click)="guardarCambios()" class="alert-link pointer" style="color: green;">Guardar Cambios</a> |
+                            <a (click)="descartarCambios()" class="alert-link pointer" style="color: red;">Descartar Cambios</a>
+                        </div>
                     </div>
                     <div class="col-sm-6 col-md-6">
                         <p *ngIf="this.clinica._id" class="bold text-right">
@@ -19,6 +24,8 @@
                 </div>
             </div>
         </div>
+
+
         <div class="container navigation">
 
             <div class="navbar-header page-scroll">
@@ -68,29 +75,43 @@
                 <div class="row">
                     <div class="col-lg-6">
                         <div class="wow fadeInDown" data-wow-offset="0" data-wow-delay="0.1s">
-                            <ng-container *ngIf="this.edit; else readOnlySubtitulo">
-                                <h2 class="h-ultra" (click)="textEditModal('sitioInstitucional.principal.eslogan')">{{ this.clinica.sitioInstitucional?.principal.eslogan ? this.clinica.sitioInstitucional?.principal.eslogan : 'Ingrese el eslogan' }}</h2>
+                            <ng-container *ngIf="this.edit; else readOnlyEslogan">
+                                <h2 class="h-ultra pointer" (click)="textEditModal('sitioInstitucional.principal.eslogan',this.clinica.sitioInstitucional?.principal.eslogan ? this.clinica.sitioInstitucional?.principal.eslogan : 'Ingrese el eslogan' )">{{ this.clinica.sitioInstitucional?.principal.eslogan ? this.clinica.sitioInstitucional?.principal.eslogan : 'Ingrese el eslogan' }}</h2>
                             </ng-container>
-                            <ng-template #readOnlySubtitulo>
+                            <ng-template #readOnlyEslogan>
                                 <h2 class="h-ultra">{{ this.clinica.sitioInstitucional?.principal.eslogan }}</h2>
                             </ng-template>
 
 
                         </div>
                         <div class="wow fadeInUp" data-wow-offset="0" data-wow-delay="0.1s">
-                            <h4 class="h-light">Brindando la mejor calidad al cuidado de tu salud</h4>
+                            <ng-container *ngIf="this.edit; else readOnlyDescripcion">
+                                <h4 class="h-light pointer" (click)="textEditModal('sitioInstitucional.principal.descripcion',this.clinica.sitioInstitucional?.principal.descripcion ? this.clinica.sitioInstitucional?.principal.descripcion : 'Ingrese la descripción' )">{{ this.clinica.sitioInstitucional?.principal.descripcion ? this.clinica.sitioInstitucional?.principal.descripcion : 'Ingrese la descripción' }}</h4>
+                            </ng-container>
+                            <ng-template #readOnlyDescripcion>
+                                <h4 class="h-light">{{ this.clinica.sitioInstitucional?.principal.descripcion }}</h4>
+                            </ng-template>
+
                         </div>
                         <div class="well well-trans">
-                            <div class="wow fadeInRight" data-wow-delay="0.1s">
-
-                                <ul class="lead-list">
-                                    <li><span class="fas fa-check fa-2x icon-success"></span> <span class="list"><strong>Affordable monthly premium packages</strong><br />Lorem ipsum dolor sit amet, in verterem persecuti vix, sit te meis</span></li>
-                                    <li><span class="fas fa-check fa-2x icon-success"></span> <span class="list"><strong>Choose your favourite doctor</strong><br />Lorem ipsum dolor sit amet, in verterem persecuti vix, sit te meis</span></li>
-                                    <li><span class="fas fa-check fa-2x icon-success"></span> <span class="list"><strong>Only use friendly environment</strong><br />Lorem ipsum dolor sit amet, in verterem persecuti vix, sit te meis</span></li>
+                            <div *ngIf="this.edit" style="float:right;">
+                                <button type="button" (click)="agregarItem()" class="pointer  btn btn-rounded btn-primary btn-sm m-l-5">
+                                            <i class="fa fa-plus"></i> 
+                                </button>
+                            </div>
+                            <div class="wow fadeInRight" data-wow-delay="0.1s" style="display: inline;">
+                                <ul *ngIf="this.clinica.sitioInstitucional" class="lead-list">
+                                    <li *ngFor="let item of this.clinica.sitioInstitucional.principal.items">
+                                        <span class="fas fa-check fa-2x icon-success" style="vertical-align: top;"></span>
+                                        <span class="list" style="max-width: 75%">
+                                        <strong>{{ item.tituloItem }}</strong> 
+                                        <span *ngIf="this.edit" class="pointer m-5"><i class="fa fa-trash-alt" style="color: red;"></i> </span>
+                                        <br />{{ item.descripcionItem }}</span>
+                                    </li>
                                 </ul>
-                                <p class="text-right wow bounceIn" data-wow-delay="0.4s">
+                                <!-- <p class="text-right wow bounceIn" data-wow-delay="0.4s">
                                     <a href="#" class="btn btn-skin btn-lg">Learn more <i class="fas fa-angle-right"></i></a>
-                                </p>
+                                </p> -->
                             </div>
                         </div>
 
