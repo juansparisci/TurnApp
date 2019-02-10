@@ -11,6 +11,9 @@ import { throwError } from 'rxjs/internal/observable/throwError';
   providedIn: 'root'
 })
 export class ClinicaService {
+  hayCambios: boolean;
+  edit: boolean;
+  clinica: Clinica;
   constructor(
     private http: HttpClient,
     private router: Router
@@ -21,21 +24,24 @@ export class ClinicaService {
   }
   obtenerClinicaPorUrl( pUrl: string ) {
     const url = URL_SERVICIOS + '/clinica/url/' + pUrl;
-    return this.http.get(url);
+    this.http.get(url).subscribe((cli: any) => {
+      this.clinica = cli.clinica;
+      this.hayCambios = false;
+     });
   }
-  actualizarSitioClinica(clinica: Clinica, token: string) {
-    let url = URL_SERVICIOS + '/clinica/sitio/' + clinica._id;
+  actualizarSitioClinica(token: string) {
+    let url = URL_SERVICIOS + '/clinica/sitio/' + this.clinica._id;
     url += '?token=' + token;
-    return this.http.put( url, clinica).pipe(
+    return this.http.put( url, this.clinica).pipe(
       map( (resp: any) => {
-        swal('Clinica actualizada', clinica.nombre, 'success');
-        return clinica;
+        swal('Clinica actualizada', this.clinica.nombre, 'success');
+        return this.clinica;
       }),
       catchError( err => {
        swal('Error al actualizar clínica', err.error.mensaje, 'error');
        if (err.status === 401) {
         swal('Sesión vencida. Por favor vuelva a iniciar sesión.');
-        location.href = URL_ADMINPANEL + '/' + encodeURIComponent(clinica.urlId) + '/' + 'login';
+        location.href = URL_ADMINPANEL + '/' + encodeURIComponent(this.clinica.urlId) + '/' + 'login';
        }
        return throwError(err);
      })

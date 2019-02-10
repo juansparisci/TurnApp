@@ -1,0 +1,65 @@
+<nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
+    <div class="top-area">
+        <div class="container">
+
+            <div class="row">
+                <div class="col-sm-6 col-md-6">
+                    <div *ngIf="_clinicaService.hayCambios" class="alert alert-warning" style="position: absolute; z-index: 1;" role="alert">
+                        <a (click)="guardarCambios()" class="alert-link pointer" style="color: green;">Guardar Cambios</a> |
+                        <a (click)="descartarCambios()" class="alert-link pointer" style="color: red;">Descartar Cambios</a>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-6">
+                    <p *ngIf="_clinicaService.clinica?._id" class="bold text-right">
+
+                        <a [href]="'tel:'+_clinicaService.clinica.datosContacto.telefonos.principal"> <i class="fas fa-2x fa-phone m-5"></i> </a>
+                        <a [href]="'https://m.me/' + _clinicaService.clinica.datosContacto.facebook"> <i class="fab fa-2x fa-facebook-messenger m-5"></i> </a>
+                        <a [href]="'https://api.whatsapp.com/send?phone='+_clinicaService.clinica.datosContacto.telefonos.whatsapp"><i class="fab fa-2x fa-whatsapp m-5"></i></a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="container navigation">
+
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse">
+                <i class="fas fa-bars"></i>
+            </button>
+
+            <div class="navbar-brand">
+                <ng-container *ngIf="_clinicaService.edit; else readOnlyLogo">
+                    <img (click)="this.clickLogo()" class="pointer" *ngIf="_clinicaService.clinica?._id" [src]="_clinicaService.clinica.img | imagen: 'clinica'  " alt="" height="45" />
+                </ng-container>
+                <ng-template #readOnlyLogo>
+                    <img *ngIf="_clinicaService.clinica?._id" [src]="_clinicaService.clinica.img | imagen: 'clinica'  " alt="" height="45" />
+                </ng-template>
+            </div>
+
+
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse navbar-right navbar-main-collapse">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="#intro">Principal</a></li>
+                <li><a href="#service">Especialidades</a></li>
+                <li><a href="#doctor">Profesionales</a></li>
+                <li><a href="#facilities">Equipamiento</a></li>
+                <li><a href="#pricing">Precios</a></li>
+                <!-- <li class="dropdown">
+                      <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="badge custom-badge red pull-right">Extra</span>More <b class="caret"></b></a>
+                      <ul class="dropdown-menu">
+                          <li><a href="index.html">Home CTA</a></li>
+                          <li><a href="index-form.html">Home Form</a></li>
+                          <li><a href="index-video.html">Home video</a></li>
+                      </ul>
+                  </li> -->
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>

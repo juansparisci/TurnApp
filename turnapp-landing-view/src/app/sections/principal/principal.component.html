@@ -1,0 +1,55 @@
+<section id="intro" class="intro">
+    <div class="intro-content">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="animated fadeInDown">
+                        <ng-container *ngIf="_clinicaService.edit; else readOnlyEslogan">
+                            <h2 class="h-ultra pointer" (click)="textEditModal('sitioInstitucional.principal.eslogan',_clinicaService.clinica.sitioInstitucional?.principal.eslogan ? _clinicaService.clinica.sitioInstitucional?.principal.eslogan : 'Ingrese el eslogan' )">{{ _clinicaService.clinica.sitioInstitucional?.principal.eslogan ? _clinicaService.clinica.sitioInstitucional?.principal.eslogan : 'Ingrese el eslogan' }}</h2>
+                        </ng-container>
+                        <ng-template #readOnlyEslogan>
+                            <h2 class="h-ultra">{{ _clinicaService.clinica.sitioInstitucional?.principal.eslogan }}</h2>
+                        </ng-template>
+
+
+                    </div>
+                    <div class="animated fadeInUp">
+                        <ng-container *ngIf="_clinicaService.edit; else readOnlyDescripcion">
+                            <h4 class="h-light pointer" (click)="textEditModal('sitioInstitucional.principal.descripcion',_clinicaService.clinica.sitioInstitucional?.principal.descripcion ? _clinicaService.clinica.sitioInstitucional?.principal.descripcion : 'Ingrese la descripción' )">{{ _clinicaService.clinica.sitioInstitucional?.principal.descripcion ? _clinicaService.clinica.sitioInstitucional?.principal.descripcion : 'Ingrese la descripción' }}</h4>
+                        </ng-container>
+                        <ng-template #readOnlyDescripcion>
+                            <h4 class="h-light">{{ _clinicaService.clinica.sitioInstitucional?.principal.descripcion }}</h4>
+                        </ng-template>
+
+                    </div>
+                    <div class="well well-trans">
+                        <div *ngIf="_clinicaService.edit" style="float:right;">
+                            <button type="button" (click)="agregarItem()" class="pointer  btn btn-rounded btn-primary btn-sm m-l-5">
+                                      <i class="fa fa-plus"></i> 
+                          </button>
+                        </div>
+                        <div class="animated fadeInRight" style="display: inline;">
+                            <ul *ngIf="_clinicaService.clinica.sitioInstitucional" class="lead-list">
+                                <li *ngFor="let item of _clinicaService.clinica.sitioInstitucional.principal.items; let i = index">
+                                    <span class="fas fa-check fa-2x icon-success" style="vertical-align: top;"></span>
+                                    <span class="list" style="max-width: 75%">
+                                  <strong>{{ item.tituloItem }}</strong> 
+                                  <span *ngIf="_clinicaService.edit" (click)="this.quitarItem(i)" class="pointer m-5"><i class="fa fa-trash-alt" style="color: red;"></i> </span>
+                                    <br />{{ item.descripcionItem }}
+                                    </span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="col-lg-6">
+                    <div class="animated fadeInUp">
+                        <img src="assets/img/dummy/img-1.png" class="img-responsive" alt="" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
