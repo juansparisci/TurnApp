@@ -176,6 +176,10 @@
          if (body.datosContacto) {
              clinica.datosContacto = body.datosContacto;
          }
+         if (body.profesiones) {
+
+         }
+
 
          clinica.save((er, clinicaGuardada) => {
              if (er) {
@@ -193,6 +197,7 @@
 
      });
  });
+
  /**
   * Actualizar Sitio de Clínica
   */
@@ -235,4 +240,99 @@
 
      });
  });
+
+ /**
+  * Vincular/Desvincular Profesion
+  */
+ app.put('/profesion/:idClinica/:idProfesion', mdAutenticacion.verificaToken, (req, res) => {
+     var idClinica = req.params.idClinica;
+     var idProfesion = req.params.idProfesion;
+     Clinica.findById(idClinica, (err, clinica) => {
+         if (err) {
+             return res.status(500).json({
+                 ok: false,
+                 mensaje: 'Error al buscar clínica',
+                 errors: err
+             });
+         }
+         if (!clinica) {
+             return res.status(400).json({
+                 ok: false,
+                 mensaje: 'La clínica con el id ' + idClinica + ' no existe',
+                 errors: { message: 'No existe una clínica con ese id' }
+             });
+         }
+
+         var indexProfesionAsignada = clinica.profesiones.findIndex(p => p.profesion.toString() === idProfesion);
+         if (indexProfesionAsignada !== -1) {
+             clinica.profesiones.splice(indexProfesionAsignada, 1);
+         } else {
+             clinica.profesiones.push({ profesion: { _id: idProfesion } });
+         }
+         clinica.save((er, clinicaGuardada) => {
+             if (er) {
+                 return res.status(400).json({
+                     ok: false,
+                     mensaje: 'Error al actualizar clínica',
+                     errors: er
+                 });
+             }
+             res.status(200).json({
+                 ok: true,
+                 clinica: clinicaGuardada
+             });
+         });
+
+     });
+ });
+
+ /**
+  * Vincular/Desvincular Especialidad
+  */
+ app.put('/profesion/especialidad/:idClinica/:idProfesion/:idEspecialidad', mdAutenticacion.verificaToken, (req, res) => {
+     var idClinica = req.params.idClinica;
+     var idProfesion = req.params.idProfesion;
+     var idEspecialidad = req.params.idEspecialidad;
+     Clinica.findById(idClinica, (err, clinica) => {
+         if (err) {
+             return res.status(500).json({
+                 ok: false,
+                 mensaje: 'Error al buscar clínica',
+                 errors: err
+             });
+         }
+         if (!clinica) {
+             return res.status(400).json({
+                 ok: false,
+                 mensaje: 'La clínica con el id ' + idClinica + ' no existe',
+                 errors: { message: 'No existe una clínica con ese id' }
+             });
+         }
+
+         var profesionAsignada = clinica.profesiones.find(p => p.profesion.toString() === idProfesion);
+         var indexEspecialidadAsignada = profesionAsignada.especialidadesAsignadas.findIndex(e => e.especialidad.toString() === idEspecialidad);
+         if (indexEspecialidadAsignada !== -1) {
+             profesionAsignada.especialidadesAsignadas.splice(indexEspecialidadAsignada, 1);
+         } else {
+             profesionAsignada.especialidadesAsignadas.push({ especialidad: { _id: idEspecialidad } });
+         }
+
+
+         clinica.save((er, clinicaGuardada) => {
+             if (er) {
+                 return res.status(400).json({
+                     ok: false,
+                     mensaje: 'Error al actualizar clínica',
+                     errors: er
+                 });
+             }
+             res.status(200).json({
+                 ok: true,
+                 clinica: clinicaGuardada
+             });
+         });
+
+     });
+ });
+
  module.exports = app;

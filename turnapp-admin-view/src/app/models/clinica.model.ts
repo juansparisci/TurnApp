@@ -1,4 +1,6 @@
 import { DatosContacto } from './datos-contacto.model';
+import { Profesion } from './profesion';
+import { Especialidad } from './especialidad';
 
 export class Clinica {
     constructor (
@@ -6,9 +8,17 @@ export class Clinica {
         public img?: string,
         public _id?: string,
         public urlId?: string,
-        public datosContacto?: DatosContacto
+        public datosContacto?: DatosContacto,
+        public profesiones?: [{ profesion: string,
+                                especialidadesAsignadas?: [{
+                                especialidad: string,
+                                descripcionPersonalizada: string,
+                                imgs: [string]
+            }],
+        }]
     ) {
      }
+
 
 }
 

@@ -54,5 +54,30 @@
                 </div>
             </div>
         </div>
+        <div *ngIf="this.profesiones.length > 0" class="row">
+            <div class="col-md-12" *ngIf="clinica._id">
+                <div class="card card-body">
+                    <h4 class="box-title m-3">Profesiones</h4>
+                    <div class="list-group">
+                        <button type="button" *ngFor="let profesion of this.profesiones" [ngClass]="{'active': this.ProfesionAsignada(profesion._id)}" (click)="CambioProfesion(profesion._id)" class="list-group-item list-group-item-action pointer">
+                                    {{ profesion.nombre }}
+                                </button>
+                    </div>
+                    <h4 *ngIf="this.clinica.profesiones && this.clinica.profesiones.length > 0" class="box-title m-3">Especialidades</h4>
+                    <div *ngFor="let profesion of this.clinica.profesiones">
+                        <h5 class="box-title m-2">{{ profesionPorId(profesion.profesion).nombre }}</h5>
+                        <div class="list-group">
+                            <button type="button" *ngFor="let especialidad of profesionPorId(profesion.profesion).especialidades" [ngClass]="{'active': this.EspecialidadAsignada(especialidad._id)}" class="list-group-item list-group-item-action">
+                                        {{ especialidad.nombre }}                                        
+                                        <i *ngIf="!this.EspecialidadAsignada(especialidad._id)" class="fa fa-plus float-right  ml-2 pointer" style="color: green;  font-size: 25px;"    (click)="CambioEspecialidad(especialidad._id, profesion.profesion)" ></i>
+                                        <i *ngIf="this.EspecialidadAsignada(especialidad._id)"  class="fa fa-trash float-right ml-2 pointer" style="color: red;    font-size: 25px;"     (click)="CambioEspecialidad(especialidad._id, profesion.profesion)"  ></i>
+                                        <i *ngIf="this.EspecialidadAsignada(especialidad._id)"  class="fa fa-edit float-right  ml-2 pointer" style="color: orange; font-size: 25px;" (click)="EditarEspecialidadAsignada(profesion.profesion,especialidad._id)"></i>
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

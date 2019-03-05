@@ -97,4 +97,38 @@ export class ClinicaService {
      })
     );
   }
+
+  vincularDesvincularProfesion( idClinica: string, idProfesion: string) {
+    let url = URL_SERVICIOS + '/clinica/profesion/' + idClinica + '/' + idProfesion;
+    url += '?token=' + this._usuarioService.token;
+    return this.http.put(url, {}).pipe(
+      map( (resp: any) => {
+        return true;
+      }),
+      catchError( err => {
+       swal('Error al actualizar profesión', err.error.mensaje, 'error');
+       if (err.status === 401) {
+        this.router.navigate(['/' + this._usuarioService.clinica.urlId, 'login']);
+       }
+       return throwError(err);
+     })
+    );
+  }
+
+  vincularDesvincularEspecialidad( idClinica: string, idProfesion: string, idEspecialidad: string) {
+    let url = URL_SERVICIOS + '/clinica/profesion/especialidad/' + idClinica + '/' + idProfesion + '/' + idEspecialidad;
+    url += '?token=' + this._usuarioService.token;
+    return this.http.put(url, {}).pipe(
+      map( (resp: any) => {
+        return true;
+      }),
+      catchError( err => {
+       swal('Error al actualizar espcialidad', err.error.mensaje, 'error');
+       if (err.status === 401) {
+        this.router.navigate(['/' + this._usuarioService.clinica.urlId, 'login']);
+       }
+       return throwError(err);
+     })
+    );
+  }
 }

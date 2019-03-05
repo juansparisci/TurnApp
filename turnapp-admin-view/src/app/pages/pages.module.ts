@@ -37,6 +37,7 @@ import { OcupacionesComponent } from './ocupaciones/ocupaciones.component';
 import { ProfesionesComponent } from './profesiones/profesiones.component';
 import { ProfesionComponent } from './profesiones/profesion.component';
 import { EspecialidadComponent } from './profesiones/especialidad/especialidad.component';
+import { EspecialidadAsignadaComponent } from './clinicas/especialidad-asignada/especialidad-asignada.component';
 @NgModule({
     declarations: [
         DashboardComponent,
@@ -61,7 +62,8 @@ import { EspecialidadComponent } from './profesiones/especialidad/especialidad.c
         OcupacionesComponent,
         ProfesionesComponent,
         ProfesionComponent,
-        EspecialidadComponent
+        EspecialidadComponent,
+        EspecialidadAsignadaComponent
     ],
     exports: [
         DashboardComponent,
