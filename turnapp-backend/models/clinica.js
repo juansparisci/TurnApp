@@ -22,7 +22,7 @@ var clinicaSchema = new Schema({
             especialidad: { type: Schema.Types.ObjectId, ref: 'Profesion.especialidades', required: true },
             descripcionPersonalizada: { type: String, required: false },
             imgs: [{ type: String, required: false }]
-        }],
+        }]
     }],
     datosContacto: {
         required: false,

@@ -176,11 +176,6 @@
          if (body.datosContacto) {
              clinica.datosContacto = body.datosContacto;
          }
-         if (body.profesiones) {
-
-         }
-
-
          clinica.save((er, clinicaGuardada) => {
              if (er) {
                  return res.status(400).json({
@@ -264,10 +259,12 @@
          }
 
          var indexProfesionAsignada = clinica.profesiones.findIndex(p => p.profesion.toString() === idProfesion);
+         let idProfesionAsignada;
          if (indexProfesionAsignada !== -1) {
              clinica.profesiones.splice(indexProfesionAsignada, 1);
          } else {
              clinica.profesiones.push({ profesion: { _id: idProfesion } });
+             idProfesionAsignada = clinica.profesiones.find(p => p.profesion.toString() == idProfesion)._id.toString();
          }
          clinica.save((er, clinicaGuardada) => {
              if (er) {
@@ -279,7 +276,7 @@
              }
              res.status(200).json({
                  ok: true,
-                 clinica: clinicaGuardada
+                 idProfesionAsignada: idProfesionAsignada
              });
          });
 
@@ -311,10 +308,12 @@
 
          var profesionAsignada = clinica.profesiones.find(p => p.profesion.toString() === idProfesion);
          var indexEspecialidadAsignada = profesionAsignada.especialidadesAsignadas.findIndex(e => e.especialidad.toString() === idEspecialidad);
+         let idEspecialidadAsignada;
          if (indexEspecialidadAsignada !== -1) {
              profesionAsignada.especialidadesAsignadas.splice(indexEspecialidadAsignada, 1);
          } else {
              profesionAsignada.especialidadesAsignadas.push({ especialidad: { _id: idEspecialidad } });
+             idEspecialidadAsignada = profesionAsignada.especialidadesAsignadas.find(e => e.especialidad.toString() == idEspecialidad)._id.toString();
          }
 
 
@@ -328,7 +327,7 @@
              }
              res.status(200).json({
                  ok: true,
-                 clinica: clinicaGuardada
+                 idEspecialidadAsignada: idEspecialidadAsignada
              });
          });
 

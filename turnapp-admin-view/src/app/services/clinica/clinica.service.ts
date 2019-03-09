@@ -103,7 +103,7 @@ export class ClinicaService {
     url += '?token=' + this._usuarioService.token;
     return this.http.put(url, {}).pipe(
       map( (resp: any) => {
-        return true;
+        return resp;
       }),
       catchError( err => {
        swal('Error al actualizar profesión', err.error.mensaje, 'error');
@@ -120,7 +120,7 @@ export class ClinicaService {
     url += '?token=' + this._usuarioService.token;
     return this.http.put(url, {}).pipe(
       map( (resp: any) => {
-        return true;
+        return resp;
       }),
       catchError( err => {
        swal('Error al actualizar espcialidad', err.error.mensaje, 'error');

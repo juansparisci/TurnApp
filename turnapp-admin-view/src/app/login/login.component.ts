@@ -8,6 +8,7 @@ import { NgZone } from '@angular/core'; // Se usa para resolver bug con el templ
 import { Clinica } from '../models/clinica.model';
 import { ClinicaService } from '../services/clinica/clinica.service';
 import { ImagenPipe } from '../pipes/imagen.pipe';
+import { DEFAULT_URLID } from '../config/config';
 
 
 declare function init_plugins();
@@ -30,11 +31,15 @@ export class LoginComponent implements OnInit {
               private activatedRoute: ActivatedRoute,
               public imagen: ImagenPipe) {
                 activatedRoute.params.subscribe( params => {
-                  const urlClinica = encodeURIComponent(decodeURIComponent(params['urlClinica']));
+                  let urlClinica = DEFAULT_URLID;
+                  if ( params['urlClinica']) {
+                  urlClinica = encodeURIComponent(decodeURIComponent(params['urlClinica']));
+                  }
                   _clinicaServie.obtenerClinicaPorUrl(urlClinica).subscribe((cli: any) => {
                        this.clinica = cli.clinica;
                       }
                      );
+
                 });
                }
 

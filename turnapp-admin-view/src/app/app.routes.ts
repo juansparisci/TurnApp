@@ -9,6 +9,7 @@ import { LoginGuardGuard } from './services/service.index';
 const appRoutes: Routes = [
         { path: ':urlClinica/login', component: LoginComponent },
         { path: 'register', component: RegisterComponent },
+        { path: '', component: LoginComponent },
         {
                 path: '',
                 component: PagesComponent,

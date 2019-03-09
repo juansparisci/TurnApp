@@ -9,7 +9,8 @@ export class Clinica {
         public _id?: string,
         public urlId?: string,
         public datosContacto?: DatosContacto,
-        public profesiones?: [{ profesion: string,
+        public profesiones?: [{ _id: string,
+                                profesion: string,
                                 especialidadesAsignadas?: [{
                                 especialidad: string,
                                 descripcionPersonalizada: string,

@@ -108,8 +108,8 @@ export class ClinicaComponent implements OnInit {
     const profEncontrada = this.findProfesionById(profesion);
     if (!profEncontrada) {
       this._clinicaService.vincularDesvincularProfesion(this.clinica._id, profesion).subscribe(ret => {
-              if (ret) {
-                this.clinica.profesiones.push({profesion: profesion});
+              if (ret.ok) {
+                this.clinica.profesiones.push({_id: ret.idProfesionAsignada, profesion: profesion});
               }
       });
       }else {
@@ -124,7 +124,7 @@ export class ClinicaComponent implements OnInit {
         });
       }else {
         this._clinicaService.vincularDesvincularProfesion(this.clinica._id, profesion).subscribe(ret => {
-          if (ret) {
+          if (ret.ok) {
       this.clinica.profesiones.splice(this.clinica.profesiones.indexOf(profEncontrada), 1);
           }
   });
@@ -142,8 +142,8 @@ export class ClinicaComponent implements OnInit {
         profEncontrada.especialidadesAsignadas = [];
       }
       this._clinicaService.vincularDesvincularEspecialidad(this.clinica._id, profesion, especialidad).subscribe(ret => {
-        if (ret) {
-          profEncontrada.especialidadesAsignadas.push({ especialidad: especialidad});
+        if (ret.ok) {
+          profEncontrada.especialidadesAsignadas.push({ _id: ret.idEspecialidadAsignada, especialidad: especialidad});
         }
 });
     }else {
@@ -159,7 +159,7 @@ export class ClinicaComponent implements OnInit {
       .then((willDelete) => {
         if (willDelete) {
           this._clinicaService.vincularDesvincularEspecialidad(this.clinica._id, profesion, especialidad).subscribe(ret => {
-            if (ret) {
+            if (ret.ok) {
               profEncontrada.especialidadesAsignadas.splice(profEncontrada.especialidadesAsignadas.indexOf(espEncontrada), 1);
             }
     });
@@ -208,9 +208,8 @@ public EditarEspecialidadAsignada(idProfesion: string, idEspecialidad: string) {
   // revisar, cuando se asigna la especialidad, no tiene id de especialidad asignada... igual con la profesion
   // revisar en el retorno del put de ambos casos, si corresponde recuperar el id del ws del backend
   // y agregarlo a la lista...
-
-  
    const profesion  = this.findProfesionById(idProfesion);
    const especialidad = this.findEspecialidadById(idEspecialidad);
+   
 }
 }
