@@ -1,3 +1,42 @@
-<p>
-  especialidad-asignada works!
-</p>
+<div class="row animated fadeIn" *ngIf="this.especialidadAsignada">
+    <div class="col-md-6">
+        <div class="card card-body">
+
+            <h3 class="box-title m-b-0">Especialidad: {{ this.especialidadAsignada.nombrePersonalizado }}</h3>
+            <div class="row">
+                <div class="col-sm-12 col-xs-12">
+                    <form #f="ngForm" ngNativeValidate (ngSubmit)="guardarEspecialidad(f)">
+
+                        <div class="form-group">
+                            <div class="row">
+                                <label>Nombre </label>
+                                <input [(ngModel)]="this.especialidadAsignada.nombrePersonalizado" name="this.especialidadAsignada.nombrePersonalizado" type="text" class="form-control" placeholder="Nombre de Especialidad" required>
+                            </div>
+                            <div class="row">
+                                <label>Descripción </label>
+                                <textarea [(ngModel)]="especialidadAsignada.descripcionPersonalizada" name="especialidadAsignada.descripcionPersonalizada" class="form-control" cols="30" rows="10" placeholder="Descripción de Especialidad" required></textarea>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-success waves-effect waves-light m-r-10 m-t-10"> <i class="fa fa-save"></i> Guardar</button>
+                        <a [routerLink]="['/clinica', this.idClinica]" class="btn btn-inverse waves-effect waves-light m-t-10">Cancelar</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6" *ngIf="this.especialidadAsignada">
+        <div class="card card-body">
+            <h4 class="box-title m-b-0">Imágenes
+                <button type="button" (click)="agregarImagen()" class="pointer  btn btn-rounded btn-primary btn-sm float-right">
+                  <i class="fa fa-plus"></i>
+      </button>
+            </h4>
+            <div>
+                <div class="w-50 p-1 m-t-5" *ngFor="let img of especialidadAsignada.imgs" style="display: inline-block;">
+                    <i (click)="eliminarImagen(img)" class="fa fa-trash float-right pointer" style="color: red;"></i>
+                    <img [src]="(idClinica + '/' + img) | imagen: 'especialidad'" class="img-rounded img-thumbnail" style="vertical-align: top;">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

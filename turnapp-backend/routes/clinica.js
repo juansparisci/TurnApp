@@ -290,7 +290,10 @@
      var idClinica = req.params.idClinica;
      var idProfesion = req.params.idProfesion;
      var idEspecialidad = req.params.idEspecialidad;
-     Clinica.findById(idClinica, (err, clinica) => {
+     Clinica.findById(idClinica).populate({
+         path: 'profesiones.profesion',
+         model: 'Profesion'
+     }).exec((err, clinica) => {
          if (err) {
              return res.status(500).json({
                  ok: false,
@@ -306,13 +309,16 @@
              });
          }
 
-         var profesionAsignada = clinica.profesiones.find(p => p.profesion.toString() === idProfesion);
+         var profesionAsignada = clinica.profesiones.find(p => p.profesion.id === idProfesion);
          var indexEspecialidadAsignada = profesionAsignada.especialidadesAsignadas.findIndex(e => e.especialidad.toString() === idEspecialidad);
          let idEspecialidadAsignada;
          if (indexEspecialidadAsignada !== -1) {
              profesionAsignada.especialidadesAsignadas.splice(indexEspecialidadAsignada, 1);
          } else {
-             profesionAsignada.especialidadesAsignadas.push({ especialidad: { _id: idEspecialidad } });
+
+             const especialidad = profesionAsignada.profesion.especialidades.id(idEspecialidad);
+
+             profesionAsignada.especialidadesAsignadas.push({ nombrePersonalizado: especialidad.nombre, especialidad: { _id: idEspecialidad } });
              idEspecialidadAsignada = profesionAsignada.especialidadesAsignadas.find(e => e.especialidad.toString() == idEspecialidad)._id.toString();
          }
 
@@ -333,5 +339,92 @@
 
      });
  });
+
+ // ==========================================
+ // Obtener Especialidad Asignada
+ // ==========================================
+ app.get('/profesion/especialidad/:idClinica/:idProfesionAsig/:idEspecialidadAsig', (req, res) => {
+     var idClinica = req.params.idClinica;
+     let idProfesionAsig = req.params.idProfesionAsig;
+     var idEspecialidadAsig = req.params.idEspecialidadAsig;
+
+
+
+
+     Clinica.findById(idClinica).populate({
+         path: 'profesiones.profesion',
+         model: 'Profesion'
+     }).exec((err, cli) => {
+         if (err) {
+             return res.status(500).json({
+                 ok: false,
+                 mensaje: 'Error al buscar clínica',
+                 errors: err
+             });
+         }
+         if (!cli) {
+             return res.status(400).json({
+                 ok: false,
+                 mensaje: 'La clínica con el id ' + idClinica + ' no existe',
+                 errors: { message: 'No existe una clínica con ese id' }
+             });
+         }
+
+         const profesionAisg = cli.profesiones.id(idProfesionAsig);
+         const especialidadAsignada = profesionAisg.especialidadesAsignadas.id(idEspecialidadAsig);
+         const especialidad = profesionAisg.profesion.especialidades.id(especialidadAsignada.especialidad.toString());
+
+         res.status(200).json({
+             ok: true,
+             especialidadAsignada: especialidadAsignada,
+             especialidad: especialidad
+         });
+     });
+ });
+
+ /**
+  * Actualizar Especialidad Asignada
+  */
+ app.put('/profesion/especialidad/:idClinica/:idProfesionAsig', mdAutenticacion.verificaToken, (req, res) => {
+     var idClinica = req.params.idClinica;
+     var idProfesionAsig = req.params.idProfesionAsig;
+     var body = req.body;
+     Clinica.findById(idClinica, (err, clinica) => {
+         if (err) {
+             return res.status(500).json({
+                 ok: false,
+                 mensaje: 'Error al buscar clínica',
+                 errors: err
+             });
+         }
+         if (!clinica) {
+             return res.status(400).json({
+                 ok: false,
+                 mensaje: 'La clínica con el id ' + id + ' no existe',
+                 errors: { message: 'No existe una clínica con ese id' }
+             });
+         }
+         especialidadAsig = clinica.profesiones.id(idProfesionAsig).especialidadesAsignadas.id(body._id);
+         especialidadAsig.nombrePersonalizado = body.nombrePersonalizado;
+         especialidadAsig.descripcionPersonalizada = body.descripcionPersonalizada;
+         clinica.save((er, clinicaGuardada) => {
+             if (er) {
+                 return res.status(400).json({
+                     ok: false,
+                     mensaje: 'Error al actualizar clínica',
+                     errors: er
+                 });
+             }
+             res.status(200).json({
+                 ok: true,
+                 clinica: clinicaGuardada
+             });
+         });
+
+     });
+ });
+
+
+
 
  module.exports = app;

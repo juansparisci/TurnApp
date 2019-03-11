@@ -235,7 +235,6 @@ app.put('/especialidad/:idProfesion/:idEspecialidad', mdAutenticacion.verificaTo
             });
         }
         esp.nombre = body.nombre;
-        esp.descripcion = body.descripcion;
         profesion.save((er, profesionGuardada) => {
             if (er) {
                 return res.status(400).json({

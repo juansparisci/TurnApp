@@ -23,8 +23,8 @@ app.put('/:tipo/:id', mdAutenticacion.verificaToken, (req, res, next) => {
     if (tiposValidos.indexOf(tipo) < 0) {
         return res.status(400).json({
             ok: false,
-            mensaje: 'Tipo de colección no váalida',
-            errors: { message: 'Tipo de colección no váalida' }
+            mensaje: 'Tipo de colección no válida',
+            errors: { message: 'Tipo de colección no válida' }
         });
     }
 
@@ -52,10 +52,26 @@ app.put('/:tipo/:id', mdAutenticacion.verificaToken, (req, res, next) => {
     }
 
     // Nombre de archivo personalizado
-    var nombreArchivo = `${ id.replace('|','') }-${ new Date().getMilliseconds() }.${ extensionArchivo }`;
+    let nombreArchivo;
+    let path;
+    if (tipo === 'especialidades') {
+        const idClinica = id.split('|')[0];
+        nombreArchivo = `${ id.split('|')[1] + id.split('|')[2]  }-${ new Date().getMilliseconds() }.${ extensionArchivo }`;
+        // Mover el archivo del temporal a un path
+        let carpeta = `./uploads/${ tipo }/${ idClinica }`;
+        path = `${ carpeta }/${ nombreArchivo }`;
 
-    // Mover el archivo del temporal a un path
-    var path = `./uploads/${ tipo }/${ nombreArchivo }`;
+        if (!fs.existsSync(carpeta)) {
+            fs.mkdirSync(carpeta);
+        }
+    } else {
+        nombreArchivo = `${ id.replace(/\|/g,'') }-${ new Date().getMilliseconds() }.${ extensionArchivo }`;
+        // Mover el archivo del temporal a un path
+        path = `./uploads/${ tipo }/${ nombreArchivo }`;
+    }
+
+
+
 
     archivo.mv(path, err => {
         if (err) {
@@ -203,9 +219,19 @@ function subirPorTipo(tipo, id, nombreArchivo, res) {
         });
     }
     if (tipo === 'especialidades') {
-        var idProfesion = id.split('|')[0];
-        var idEspecialidad = id.split('|')[1];
-        Profesion.findById(idProfesion, (err, profesion) => {
+        const idClinica = id.split('|')[0];
+        const idProfesionAsignada = id.split('|')[1];
+        const idEspecialidadAsignada = id.split('|')[2];
+
+        Clinica.findById(idClinica, (err, clinica) => {
+            if (!clinica) {
+                return res.status(400).json({
+                    ok: false,
+                    mensaje: 'La clínica no existe',
+                    errors: { message: 'La clínica no existe' }
+                });
+            }
+            const profesion = clinica.profesiones.id(idProfesionAsignada);
             if (!profesion) {
                 return res.status(400).json({
                     ok: false,
@@ -213,19 +239,12 @@ function subirPorTipo(tipo, id, nombreArchivo, res) {
                     errors: { message: 'La profesión no existe' }
                 });
             }
-            var especialidad = profesion.especialidades.id(idEspecialidad);
-            if (!especialidad) {
-                return res.status(400).json({
-                    ok: false,
-                    mensaje: 'La especialidad no existe',
-                    errors: { message: 'La especialidad no existe' }
-                });
-            }
+            const especialidad = profesion.especialidadesAsignadas.id(idEspecialidadAsignada);
             especialidad.imgs.push(nombreArchivo);
-            profesion.save((err, profesionActualizada) => {
+            clinica.save((err, clinicaActualizada) => {
                 return res.status(200).json({
                     ok: true,
-                    mensaje: 'Imagen de especialidad agregada',
+                    mensaje: 'Imagen de especialidad agregada a clínica',
                     img: nombreArchivo
                 });
             });
@@ -259,12 +278,23 @@ app.delete('/:tipo/:id/:nombreArchivo', (req, res, next) => {
     }
 
 
-    // Path del archivo
-    var path = `./uploads/${ tipo }/${ nombreArchivo }`;
+    let path;
+    if (tipo === 'especialidades') {
+        const idClinica = id.split('|')[0];
+        let carpeta = `./uploads/${ tipo }/${ idClinica }`;
+        path = `${ carpeta }/${ nombreArchivo }`;
+    } else {
+        nombreArchivo = `${ id.replace(/\|/g,'') }-${ new Date().getMilliseconds() }.${ extensionArchivo }`;
+        path = `./uploads/${ tipo }/${ nombreArchivo }`;
+    }
+
     // Elimina archivo
     if (fs.existsSync(path)) {
         fs.unlink(path, err => {});
     }
+
+
+
     eliminarPorTipo(tipo, nombreArchivo, id, res);
 
 
@@ -272,9 +302,19 @@ app.delete('/:tipo/:id/:nombreArchivo', (req, res, next) => {
 
 function eliminarPorTipo(tipo, nombreArchivo, id, res) {
     if (tipo === 'especialidades') {
-        var idProfesion = id.split('|')[0];
-        var idEspecialidad = id.split('|')[1];
-        Profesion.findById(idProfesion, (err, profesion) => {
+        const idClinica = id.split('|')[0];
+        const idProfesionAsignada = id.split('|')[1];
+        const idEspecialidadAsignada = id.split('|')[2];
+
+        Clinica.findById(idClinica, (err, clinica) => {
+            if (!clinica) {
+                return res.status(400).json({
+                    ok: false,
+                    mensaje: 'La clínica no existe',
+                    errors: { message: 'La clínica no existe' }
+                });
+            }
+            const profesion = clinica.profesiones.id(idProfesionAsignada);
             if (!profesion) {
                 return res.status(400).json({
                     ok: false,
@@ -282,23 +322,19 @@ function eliminarPorTipo(tipo, nombreArchivo, id, res) {
                     errors: { message: 'La profesión no existe' }
                 });
             }
-            var especialidad = profesion.especialidades.id(idEspecialidad);
-            if (!especialidad) {
-                return res.status(400).json({
-                    ok: false,
-                    mensaje: 'La especialidad no existe',
-                    errors: { message: 'La especialidad no existe' }
-                });
-            }
+            const especialidad = profesion.especialidadesAsignadas.id(idEspecialidadAsignada);
+
             especialidad.imgs.splice(especialidad.imgs.indexOf(nombreArchivo), 1);
-            profesion.save((err, profesionActualizada) => {
+            clinica.save((err, clinicaActualizada) => {
                 return res.status(200).json({
                     ok: true,
-                    mensaje: 'Imagen de especialidad agregada'
+                    mensaje: 'Imagen de especialidad eliminada de clínica',
+                    img: nombreArchivo
                 });
             });
 
         });
+
     }
 }
 

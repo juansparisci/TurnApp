@@ -20,6 +20,7 @@ var clinicaSchema = new Schema({
         profesion: { type: Schema.Types.ObjectId, ref: 'Profesion', required: true },
         especialidadesAsignadas: [{
             especialidad: { type: Schema.Types.ObjectId, ref: 'Profesion.especialidades', required: true },
+            nombrePersonalizado: { type: String, required: false },
             descripcionPersonalizada: { type: String, required: false },
             imgs: [{ type: String, required: false }]
         }]

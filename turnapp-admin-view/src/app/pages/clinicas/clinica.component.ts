@@ -204,12 +204,9 @@ export class ClinicaComponent implements OnInit {
      return this.profesiones.find(p => p._id === id);
  }
 public EditarEspecialidadAsignada(idProfesion: string, idEspecialidad: string) {
-
-  // revisar, cuando se asigna la especialidad, no tiene id de especialidad asignada... igual con la profesion
-  // revisar en el retorno del put de ambos casos, si corresponde recuperar el id del ws del backend
-  // y agregarlo a la lista...
-   const profesion  = this.findProfesionById(idProfesion);
-   const especialidad = this.findEspecialidadById(idEspecialidad);
-   
+  const idClinica = this.clinica._id;
+  const idProfAsig  = this.findProfesionById(idProfesion)._id;
+  const idEspAsig = this.findEspecialidadById(idEspecialidad)._id;
+   this.router.navigate(['clinica', 'especialidad', idClinica, idProfAsig, idEspAsig]);
 }
 }

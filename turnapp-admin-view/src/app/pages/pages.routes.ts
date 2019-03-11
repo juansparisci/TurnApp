@@ -22,6 +22,7 @@ import { OcupacionesComponent } from './ocupaciones/ocupaciones.component';
 import { ProfesionesComponent } from './profesiones/profesiones.component';
 import { ProfesionComponent } from './profesiones/profesion.component';
 import { EspecialidadComponent } from './profesiones/especialidad/especialidad.component';
+import { EspecialidadAsignadaComponent } from './clinicas/especialidad-asignada/especialidad-asignada.component';
 
 const pagesRoutes: Routes = [
     //#region pruebas
@@ -57,6 +58,8 @@ const pagesRoutes: Routes = [
     { path: 'profesiones', component: ProfesionesComponent, data: {titulo: 'Profesiones'} },
     { path: 'profesion/:id', component: ProfesionComponent, data: {titulo: 'Profesión'} },
     { path: 'profesion/especialidad/:idProfesion/:idEspecialidad', component: EspecialidadComponent, data: {titulo: 'Especialidad'} },
+    { path: 'clinica/especialidad/:idClinica/:idProfesion/:idEspecialidad',
+      component: EspecialidadAsignadaComponent, data: {titulo: 'Especialidad Asignada'} },
     { path: 'clinica/:id', component: ClinicaComponent, data: {titulo: 'Actualizar Clinica'} },
     { path: '', redirectTo: '/dashboard', pathMatch: 'full' }
 ];

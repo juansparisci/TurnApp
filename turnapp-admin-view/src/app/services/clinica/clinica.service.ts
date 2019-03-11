@@ -6,6 +6,7 @@ import { UsuarioService } from '../usuario/usuario.service';
 import { map, catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 import { Router } from '@angular/router';
+import { EspecialidadAsignada } from '../../models/especialidadAsignada';
 
 @Injectable({
   providedIn: 'root'
@@ -131,4 +132,40 @@ export class ClinicaService {
      })
     );
   }
+
+  obtenerEspecialidadAsignada( idClinica: string, idProfesion: string, idEspecialidad: string ) {
+    const url = URL_SERVICIOS + '/clinica/profesion/especialidad/' + idClinica + '/' + idProfesion + '/' + idEspecialidad;
+    return this.http.get(url);
+  }
+
+  actualizarEspecialidadAsignada(idClinica: string, idProfesionAsignada: string, especialidadAsignada: EspecialidadAsignada) {
+    let url = URL_SERVICIOS + '/clinica/profesion/especialidad/' + idClinica + '/' + idProfesionAsignada ;
+    url += '?token=' + this._usuarioService.token;
+    return this.http.put( url, especialidadAsignada).pipe(
+      map( (resp: any) => {
+        swal('Especialidad actualizada', especialidadAsignada.nombrePersonalizado, 'success');
+        return resp;
+      }),
+      catchError( err => {
+       swal('Error al actualizar especialidad', err.error.mensaje, 'error');
+       if (err.status === 401) {
+        this.router.navigate(['/' + this._usuarioService.clinica.urlId, 'login']);
+       }
+       return throwError(err);
+     })
+    );
+  }
+  eliminarImagenEspecialidad( nombreImagen: string, idClinica: string, idProfesion: string, idEspecialidad: string ) {
+    let url = URL_SERVICIOS + '/upload/especialidades/' + idClinica + '|' + idProfesion + '|' + idEspecialidad + '/' + nombreImagen;
+    url += '?token=' + this._usuarioService.token;
+    return this.http.delete(url)
+    .pipe(
+      map(resp => {
+        swal('Imagen eliminada', 'La Especialidad ha sido eliminada correctamente', 'success');
+        return true;
+      })
+    )
+    ;
+  }
+
 }
